@@ -1,0 +1,88 @@
+---
+aid: hku
+name: University of Hong Kong
+description: >-
+  The University of Hong Kong (HKU) is a public research university in Hong Kong SAR,
+  ranked #27 in the QS World University Rankings 2025. Its public developer and API
+  footprint centers on an ITS API developer portal powered by Azure API Management
+  (gated behind institutional sign-in), the Figshare-powered HKU DataHub research-data
+  repository, and the DSpace-based HKU Scholars Hub institutional repository exposing
+  an OAI-PMH metadata interface. Most administrative and identity interfaces are not
+  openly self-service and require institutional affiliation.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research Data
+  - Open Access
+  - Hong Kong
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: hku:developer-portal
+    name: HKU ITS API Developer Portal
+    description: >-
+      HKU Information Technology Services API developer portal, powered by Azure API
+      Management. Developers can discover APIs, read documentation, try them interactively,
+      and sign up for keys. Access is gated behind institutional sign-in, so the catalog
+      of individual APIs is not publicly listed.
+    humanURL: https://developer.hku.hk/
+    baseURL: https://developer.hku.hk/
+    tags: [ Developer Portal, Azure API Management, Identity, Gated ]
+    properties:
+      - type: Documentation
+        url: https://developer.hku.hk/
+      - type: SignUp
+        url: https://developer.hku.hk/
+  - aid: hku:datahub
+    name: HKU DataHub (Figshare)
+    description: >-
+      HKU DataHub is the institution's research-data repository, hosted on the Figshare
+      platform. Public content is accessible programmatically through the Figshare REST
+      API, which supports pushing and pulling data, building collections, and constructing
+      applications on top of repository content.
+    humanURL: https://datahub.hku.hk/
+    baseURL: https://api.figshare.com/v2
+    tags: [ Research Data, Repository, Figshare, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://docs.figshare.com/
+  - aid: hku:scholars-hub-oai
+    name: HKU Scholars Hub OAI-PMH
+    description: >-
+      HKU Scholars Hub is the University's DSpace-based open-access institutional
+      repository and current research information system (CRIS), collecting and
+      disseminating HKU research outputs. It exposes an OAI-PMH metadata-harvesting
+      interface for programmatic harvesting of repository metadata.
+    humanURL: https://hub.hku.hk/
+    baseURL: https://hub.hku.hk/oai/request
+    tags: [ Institutional Repository, OAI-PMH, DSpace, Open Access, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://hub.hku.hk/
+common:
+  - type: Website
+    url: https://www.hku.hk/
+  - type: DeveloperPortal
+    url: https://developer.hku.hk/
+  - type: GitHub
+    url: https://github.com/hku-official
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-hong-kong/
+  - type: Plans
+    url: plans/hku-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/hku-rate-limits.yml
+  - type: FinOps
+    url: finops/hku-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

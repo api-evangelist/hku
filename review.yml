@@ -1,0 +1,49 @@
+---
+name: University of Hong Kong
+description: University of Hong Kong public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      Verified live: developer.hku.hk returns HTTP 200 (an Azure API Management
+      developer portal, but gated behind institutional sign-in so its API catalog is
+      not publicly enumerable); datahub.hku.hk / hku.figshare.com return HTTP 202 and
+      are confirmed Figshare-hosted research-data repositories exposing the Figshare
+      REST API (api.figshare.com responds 200). github.com/hku-official is the official
+      HKU org (HTTP 200) but currently has no public repositories. The HKU Scholars Hub
+      institutional repository (hub.hku.hk, documented as DSpace with OAI-PMH at
+      /oai/request) returned HTTP 403 to automated probes, consistent with bot/WAF
+      blocking rather than absence; treated as documented-but-unverified-live. No
+      fabricated endpoints: only URLs confirmed via web search and direct HTTP checks
+      are cataloged.
+    endpoints:
+      - url: https://developer.hku.hk/
+        status: 200
+        note: HKU ITS API developer portal (Azure API Management); gated sign-in.
+      - url: https://datahub.hku.hk/
+        status: 202
+        note: HKU DataHub research-data repository on Figshare.
+      - url: https://hku.figshare.com/
+        status: 202
+        note: Figshare-hosted HKU DataHub front end.
+      - url: https://api.figshare.com/v2
+        status: 200
+        note: Figshare REST API used by HKU DataHub for public content.
+      - url: https://hub.hku.hk/
+        status: 403
+        note: HKU Scholars Hub (DSpace); WAF/bot-blocked to probes, documented as live.
+      - url: https://hub.hku.hk/oai/request
+        status: 403
+        note: Documented OAI-PMH endpoint; blocked to automated requests.
+      - url: https://github.com/hku-official
+        status: 200
+        note: Official HKU GitHub org; no public repositories.
+      - url: https://www.hku.hk/
+        status: 200
+        note: Official institutional website.
+      - url: https://www.linkedin.com/school/university-of-hong-kong/
+        status: 999
+        note: LinkedIn school page; 999 is LinkedIn's standard anti-bot response.
