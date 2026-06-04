@@ -1,0 +1,59 @@
+vocabulary:
+  name: HKU DataHub (Figshare) Vocabulary
+  description: >-
+    Controlled vocabulary of the core terms exposed by the Figshare API v2, which
+    powers the HKU DataHub research-data repository. Terms are derived directly from
+    the published Figshare OpenAPI 3.0.3 description (paths and component schemas).
+  version: '2.0'
+  terms:
+    - term: Article
+      definition: >-
+        A published research output (dataset, figure, media, paper, poster, etc.)
+        in the repository, identified by an integer id and a DOI.
+      tags: [ core, object, research-output ]
+    - term: ArticleComplete
+      definition: >-
+        The full representation of an article including authors, files, custom fields,
+        embargo options and folder structure.
+      tags: [ object, detail ]
+    - term: Author
+      definition: >-
+        A person credited on an article, with full_name, orcid_id and url_name.
+      tags: [ object, people ]
+    - term: PublicFile
+      definition: >-
+        A file attached to a public article, including download URL, size and checksum.
+      tags: [ object, file ]
+    - term: Project
+      definition: >-
+        A container grouping articles and collaborators for research collaboration.
+      tags: [ object, collaboration ]
+    - term: Collection
+      definition: >-
+        A curated grouping of articles that can be published and assigned its own DOI.
+      tags: [ object, grouping ]
+    - term: DOI
+      definition: >-
+        Digital Object Identifier minted for an article, version or collection
+        (example prefix 10.6084/m9.figshare).
+      tags: [ identifier, citation ]
+    - term: Handle
+      definition: Persistent Handle System identifier assigned to a repository item.
+      tags: [ identifier ]
+    - term: Embargo
+      definition: >-
+        A time- or group-based access restriction applied to an article before release.
+      tags: [ access-control ]
+    - term: Category
+      definition: Subject classification term assigned to an article.
+      tags: [ taxonomy, metadata ]
+    - term: License
+      definition: The reuse license applied to an article's content.
+      tags: [ metadata, open-access ]
+    - term: Version
+      definition: >-
+        An immutable published snapshot of an article; new edits create new versions.
+      tags: [ versioning ]
+    - term: CustomArticleField
+      definition: Institution-defined metadata field attached to an article.
+      tags: [ metadata, institution ]

@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "hku": "https://developer.hku.hk/vocab#",
+    "figshare": "https://api.figshare.com/v2/vocab#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+
+    "Institution": "schema:CollegeOrUniversity",
+    "Article": "schema:Dataset",
+    "Author": "schema:Person",
+    "Project": "schema:Project",
+    "Collection": "schema:Collection",
+    "File": "schema:MediaObject",
+
+    "id": "schema:identifier",
+    "title": "schema:name",
+    "doi": {
+      "@id": "schema:sameAs",
+      "@type": "@id"
+    },
+    "handle": {
+      "@id": "schema:identifier"
+    },
+    "published_date": {
+      "@id": "schema:datePublished",
+      "@type": "schema:DateTime"
+    },
+    "created_date": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    },
+    "modified_date": {
+      "@id": "schema:dateModified",
+      "@type": "schema:DateTime"
+    },
+    "authors": {
+      "@id": "schema:author",
+      "@container": "@set"
+    },
+    "full_name": "schema:name",
+    "first_name": "schema:givenName",
+    "last_name": "schema:familyName",
+    "orcid_id": {
+      "@id": "schema:identifier",
+      "@type": "@id"
+    },
+    "license": "schema:license",
+    "categories": {
+      "@id": "schema:about",
+      "@container": "@set"
+    },
+    "tags": {
+      "@id": "schema:keywords",
+      "@container": "@set"
+    },
+    "files": {
+      "@id": "schema:distribution",
+      "@container": "@set"
+    },
+    "download_url": {
+      "@id": "schema:contentUrl",
+      "@type": "@id"
+    },
+    "size": "schema:contentSize"
+  },
+  "@type": "Institution",
+  "name": "University of Hong Kong",
+  "url": "https://www.hku.hk/",
+  "description": "HKU DataHub research-data repository, powered by the Figshare API v2; this @context maps the institution and its cataloged repository objects to schema.org.",
+  "hku:dataRepository": "https://datahub.hku.hk/",
+  "hku:developerPortal": "https://developer.hku.hk/"
+}

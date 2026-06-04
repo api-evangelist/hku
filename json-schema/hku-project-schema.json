@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/hku/main/json-schema/hku-project-schema.json",
+  "title": "Figshare Project",
+  "description": "JSON Schema for the Figshare API Project object (powers HKU DataHub).",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "Api endpoint",
+      "example": "http://api.figshare.com/v2/account/projects/1"
+    },
+    "id": {
+      "type": "integer",
+      "description": "Project id",
+      "example": 1
+    },
+    "title": {
+      "type": "string",
+      "description": "Project title",
+      "example": "project"
+    },
+    "created_date": {
+      "type": "string",
+      "description": "Date when project was created",
+      "example": "2017-05-16T14:52:54Z"
+    },
+    "modified_date": {
+      "type": "string",
+      "description": "Date when project was last modified",
+      "example": "2017-05-16T14:52:54Z"
+    }
+  },
+  "required": [
+    "created_date",
+    "id",
+    "modified_date",
+    "title",
+    "url"
+  ]
+}

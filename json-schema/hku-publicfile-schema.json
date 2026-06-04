@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/hku/main/json-schema/hku-publicfile-schema.json",
+  "title": "Figshare PublicFile",
+  "description": "JSON Schema for the Figshare API PublicFile object (powers HKU DataHub).",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "File id",
+      "example": 3000002
+    },
+    "name": {
+      "type": "string",
+      "description": "File name",
+      "example": "test.xls"
+    },
+    "size": {
+      "type": "integer",
+      "description": "File size",
+      "example": 14848
+    },
+    "is_link_only": {
+      "type": "boolean",
+      "description": "True if file is hosted somewhere else",
+      "example": false
+    },
+    "download_url": {
+      "type": "string",
+      "description": "Url for file download",
+      "format": "url",
+      "example": "https://ndownloader.figshare.com/files/3000002"
+    },
+    "supplied_md5": {
+      "type": "string",
+      "description": "File supplied md5",
+      "example": "043a51806d646e88cafbf19e7b82846f"
+    },
+    "computed_md5": {
+      "type": "string",
+      "description": "File computed md5",
+      "example": "043a51806d646e88cafbf19e7b82846f"
+    },
+    "mimetype": {
+      "type": "string",
+      "description": "MIME Type of the file, it defaults to an empty string",
+      "example": "application/pdf"
+    }
+  },
+  "required": [
+    "computed_md5",
+    "download_url",
+    "id",
+    "is_link_only",
+    "name",
+    "size",
+    "supplied_md5"
+  ]
+}

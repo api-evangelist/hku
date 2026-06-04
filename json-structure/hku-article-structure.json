@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/hku/main/json-structure/hku-article-structure.json",
+  "name": "FigshareArticle",
+  "description": "JSON Structure for the Figshare API Article object that powers HKU DataHub.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "int64",
+      "description": "Unique identifier for article"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of article"
+    },
+    "doi": {
+      "type": "string",
+      "description": "DOI"
+    },
+    "handle": {
+      "type": "string",
+      "description": "Handle"
+    },
+    "url": {
+      "type": "uri",
+      "description": "Api endpoint for article"
+    },
+    "url_public_html": {
+      "type": "uri",
+      "description": "Public site endpoint for article"
+    },
+    "url_public_api": {
+      "type": "uri",
+      "description": "Public Api endpoint for article"
+    },
+    "url_private_html": {
+      "type": "uri",
+      "description": "Private site endpoint for article"
+    },
+    "url_private_api": {
+      "type": "uri",
+      "description": "Private Api endpoint for article"
+    },
+    "timeline": {
+      "type": "object",
+      "description": "Reference to Timeline"
+    },
+    "thumb": {
+      "type": "uri",
+      "description": "Thumbnail image"
+    },
+    "defined_type": {
+      "type": "int64",
+      "description": "Type of article identifier"
+    },
+    "defined_type_name": {
+      "type": "string",
+      "description": "Name of the article type identifier"
+    },
+    "resource_doi": {
+      "type": "string",
+      "description": "Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article DOI."
+    },
+    "resource_title": {
+      "type": "string",
+      "description": "Deprecated by related materials. Not applicable to regular users. In a publisher case, this is the publisher article title."
+    },
+    "created_date": {
+      "type": "string",
+      "description": "Date when article was created"
+    }
+  },
+  "required": [
+    "created_date",
+    "defined_type",
+    "defined_type_name",
+    "doi",
+    "handle",
+    "id",
+    "resource_doi",
+    "resource_title",
+    "thumb",
+    "timeline",
+    "title",
+    "url",
+    "url_private_api",
+    "url_private_html",
+    "url_public_api",
+    "url_public_html"
+  ]
+}

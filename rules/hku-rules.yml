@@ -1,0 +1,49 @@
+extends: []
+formats:
+  - oas3
+documentationUrl: https://docs.figshare.com/
+rules:
+  hku-info-contact:
+    description: API info should provide a contact for support.
+    given: $.info
+    severity: warn
+    then:
+      field: contact
+      function: truthy
+  hku-info-description:
+    description: API info must have a description.
+    given: $.info
+    severity: error
+    then:
+      field: description
+      function: truthy
+  hku-server-defined:
+    description: A real server URL must be declared (Figshare API v2 powers HKU DataHub).
+    given: $.servers
+    severity: error
+    then:
+      function: length
+      functionOptions:
+        min: 1
+  hku-operation-tags:
+    description: Every operation should be tagged for discoverability.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: warn
+    then:
+      field: tags
+      function: truthy
+  hku-article-has-doi:
+    description: Article-like response objects observed in the spec carry a doi field.
+    given: $.components.schemas.Article.properties
+    severity: info
+    then:
+      field: doi
+      function: truthy
+  hku-path-kebab-or-snake:
+    description: Figshare paths use snake_case segments (e.g. reserve_doi, page_size).
+    given: $.paths[*]~
+    severity: info
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9_{}]+)+/?$"

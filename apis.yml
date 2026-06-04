@@ -53,6 +53,20 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.figshare.com/
+      - type: OpenAPI
+        url: openapi/hku-datahub.yaml
+      - type: JSONSchema
+        url: json-schema/hku-article-schema.json
+      - type: x-json-structure
+        url: json-structure/hku-article-structure.json
+      - type: x-examples
+        url: examples/hku-get-article-example.json
+      - type: x-rules
+        url: rules/hku-rules.yml
+      - type: x-vocabulary
+        url: vocabulary/hku-vocabulary.yml
+      - type: x-json-ld
+        url: json-ld/hku-context.jsonld
   - aid: hku:scholars-hub-oai
     name: HKU Scholars Hub OAI-PMH
     description: >-
