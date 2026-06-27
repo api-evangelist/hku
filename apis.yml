@@ -38,7 +38,7 @@ apis:
     properties:
       - type: Documentation
         url: https://developer.hku.hk/
-      - type: SignUp
+      - type: Signup
         url: https://developer.hku.hk/
   - aid: hku:datahub
     name: HKU DataHub (Figshare)
