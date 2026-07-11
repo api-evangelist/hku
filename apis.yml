@@ -81,6 +81,10 @@ apis:
       - type: Documentation
         url: https://hub.hku.hk/
 common:
+  - type: DomainSecurity
+    url: security/hku-domain-security.yml
+  - type: Authentication
+    url: authentication/hku-authentication.yml
   - type: OAuthScopes
     url: scopes/hku-scopes.yml
   - type: Website
