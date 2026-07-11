@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/hku-datahub.yaml
+schemes:
+- name: OAuth2
+  source: openapi/hku-datahub.yaml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://figshare.com/account/applications/authorize
+    tokenUrl: https://api.figshare.com/v2/token
+scopes:
+- scope: all
+  description: Grants all access
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/hku-datahub.yaml

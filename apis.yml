@@ -81,6 +81,8 @@ apis:
       - type: Documentation
         url: https://hub.hku.hk/
 common:
+  - type: OAuthScopes
+    url: scopes/hku-scopes.yml
   - type: Website
     url: https://www.hku.hk/
   - type: DeveloperPortal
@@ -97,6 +99,8 @@ common:
     url: finops/hku-finops.yml
   - type: Review
     url: review.yml
+  - url: https://www.hku.hk/press
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
