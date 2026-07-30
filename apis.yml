@@ -10,9 +10,22 @@ description: >-
   an OAI-PMH metadata interface. Most administrative and identity interfaces are not
   openly self-service and require institutional affiliation.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hku.png
 url: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
 tags:
   - Education
@@ -25,61 +38,281 @@ created: '2026-06-03'
 modified: '2026-06-03'
 specificationVersion: '0.19'
 apis:
-  - aid: hku:developer-portal
-    name: HKU ITS API Developer Portal
-    description: >-
-      HKU Information Technology Services API developer portal, powered by Azure API
-      Management. Developers can discover APIs, read documentation, try them interactively,
-      and sign up for keys. Access is gated behind institutional sign-in, so the catalog
-      of individual APIs is not publicly listed.
-    humanURL: https://developer.hku.hk/
-    baseURL: https://developer.hku.hk/
-    tags: [ Developer Portal, Azure API Management, Identity, Gated ]
-    properties:
-      - type: Documentation
-        url: https://developer.hku.hk/
-      - type: Signup
-        url: https://developer.hku.hk/
-  - aid: hku:datahub
-    name: HKU DataHub (Figshare)
-    description: >-
-      HKU DataHub is the institution's research-data repository, hosted on the Figshare
-      platform. Public content is accessible programmatically through the Figshare REST
-      API, which supports pushing and pulling data, building collections, and constructing
-      applications on top of repository content.
-    humanURL: https://datahub.hku.hk/
-    baseURL: https://api.figshare.com/v2
-    tags: [ Research Data, Repository, Figshare, Open Access ]
-    properties:
-      - type: Documentation
-        url: https://docs.figshare.com/
-      - type: OpenAPI
-        url: openapi/hku-datahub.yaml
-      - type: JSONSchema
-        url: json-schema/hku-article-schema.json
-      - type: x-json-structure
-        url: json-structure/hku-article-structure.json
-      - type: x-examples
-        url: examples/hku-get-article-example.json
-      - type: x-rules
-        url: rules/hku-rules.yml
-      - type: x-vocabulary
-        url: vocabulary/hku-vocabulary.yml
-      - type: x-json-ld
-        url: json-ld/hku-context.jsonld
-  - aid: hku:scholars-hub-oai
-    name: HKU Scholars Hub OAI-PMH
-    description: >-
-      HKU Scholars Hub is the University's DSpace-based open-access institutional
-      repository and current research information system (CRIS), collecting and
-      disseminating HKU research outputs. It exposes an OAI-PMH metadata-harvesting
-      interface for programmatic harvesting of repository metadata.
-    humanURL: https://hub.hku.hk/
-    baseURL: https://hub.hku.hk/oai/request
-    tags: [ Institutional Repository, OAI-PMH, DSpace, Open Access, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://hub.hku.hk/
+- aid: hku:developer-portal
+  name: HKU ITS API Developer Portal
+  description: >-
+    HKU Information Technology Services API developer portal, powered by Azure API Management. Developers
+    can discover APIs, read documentation, try them interactively, and sign up for keys. Access is gated
+    behind institutional sign-in, so the catalog of individual APIs is not publicly listed.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - Developer Portal
+  - Azure API Management
+  - Identity
+  - Gated
+  properties:
+  - type: Documentation
+    url: https://developer.hku.hk/
+  - type: Signup
+    url: https://developer.hku.hk/
+- aid: hku:scholars-hub-oai
+  name: HKU Scholars Hub OAI-PMH
+  description: >-
+    HKU Scholars Hub is the University's DSpace-based open-access institutional repository and current
+    research information system (CRIS), collecting and disseminating HKU research outputs. It exposes
+    an OAI-PMH metadata-harvesting interface for programmatic harvesting of repository metadata.
+  humanURL: https://hub.hku.hk/
+  baseURL: https://hub.hku.hk/oai/request
+  tags:
+  - Institutional Repository
+  - OAI-PMH
+  - DSpace
+  - Open Access
+  - Metadata
+  properties:
+  - type: Documentation
+    url: https://hub.hku.hk/
+- aid: hku:hku-altmetric-api
+  name: University of Hong Kong altmetric API
+  description: The altmetric API from University of Hong Kong — 1 operation(s) for altmetric.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - altmetric
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-altmetric-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-articles-api
+  name: University of Hong Kong articles API
+  description: The articles API from University of Hong Kong — 34 operation(s) for articles.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - articles
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-articles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-authors-api
+  name: University of Hong Kong authors API
+  description: The authors API from University of Hong Kong — 2 operation(s) for authors.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - authors
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-authors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-collections-api
+  name: University of Hong Kong collections API
+  description: The collections API from University of Hong Kong — 21 operation(s) for collections.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - collections
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-collections-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-institutions-api
+  name: University of Hong Kong institutions API
+  description: The institutions API from University of Hong Kong — 20 operation(s) for institutions.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - institutions
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-institutions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-oauth-api
+  name: University of Hong Kong oauth API
+  description: The oauth API from University of Hong Kong — 1 operation(s) for oauth.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-other-api
+  name: University of Hong Kong other API
+  description: The other API from University of Hong Kong — 7 operation(s) for other.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - other
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-other-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-profiles-api
+  name: University of Hong Kong profiles API
+  description: The profiles API from University of Hong Kong — 2 operation(s) for profiles.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-projects-api
+  name: University of Hong Kong projects API
+  description: The projects API from University of Hong Kong — 17 operation(s) for projects.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - projects
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
+- aid: hku:hku-symplectic-api
+  name: University of Hong Kong symplectic API
+  description: The symplectic API from University of Hong Kong — 5 operation(s) for symplectic.
+  humanURL: https://developer.hku.hk/
+  baseURL: https://developer.hku.hk/
+  tags:
+  - symplectic
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-symplectic-api-openapi.yml
+  - type: Documentation
+    url: https://docs.figshare.com/
+  - type: JSONSchema
+    url: json-schema/hku-article-schema.json
+  - type: x-json-structure
+    url: json-structure/hku-article-structure.json
+  - type: x-examples
+    url: examples/hku-get-article-example.json
+  - type: x-rules
+    url: rules/hku-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/hku-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/hku-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/hku-agentic-access.yml
