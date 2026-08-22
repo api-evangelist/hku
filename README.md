@@ -33,6 +33,28 @@
 > **Response times.** Acknowledgement within **one business day**; removal or restriction within
 > **two business days**; corrections and re-scores within **five business days**.
 >
+> **Not from the company, and here with a question?** You are welcome here — we would rather be the
+> front line and point you the right way than have a good report go nowhere. What this repository
+> can answer is narrow, though, so it is worth knowing who you are actually looking for:
+>
+> - **A question about how the API works, an account, billing, or a bug in the service** — that is
+>   the company's own support, not us. We profile this API; we do not operate it and cannot see
+>   your account.
+> - **A bug in an open-source project we only catalog** — file it on that project's own repository.
+>   This has happened with a real and correct bug report that reached us instead of the people who
+>   could fix it, which helped nobody.
+> - **Anything about this listing itself** — the description, the tags, the rating, a missing or
+>   wrong artifact — is ours. Open an issue here.
+> - **Not sure, or something general about API Evangelist or APIs.io** — open an issue on the
+>   [APIs.io Inbox](https://github.com/api-search/inbox) and we will route it.
+>
+> **This repository contains no software, and we will never ask you to download anything.** There is
+> no build, release, installer, or binary here — only text and machine-readable API descriptions, so
+> there is nothing here that can be "corrupt" or need "repairing". Any issue, comment, or email
+> claiming otherwise and offering a download link is not from us and is hostile. Do not follow the
+> link; it is a lure. Report it to GitHub and, if you like, tell us at
+> [info@apievangelist.com](mailto:info@apievangelist.com) so we can take it down.
+>
 > **On a security or compliance team?** Email
 > [info@apievangelist.com](mailto:info@apievangelist.com) with *security* in the subject line and
 > you will get a person, not a form. We will tell you exactly which public URLs this profile was
@@ -42,49 +64,97 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Hong Kong (HKU) is a public research university in Hong Kong SAR, ranked #27 in the QS World University Rankings 2025. This repository catalogs HKU's public developer and API footprint as an [APIs.json](https://apisjson.org) provider profile for the API Evangelist network.
+The University of Hong Kong (HKU) is a public research university in Hong Kong SAR, founded in 1911 and ranked in the top 30 of the QS World University Rankings. This repository catalogs HKU's public developer and API footprint as an [APIs.json](https://apisjson.org) provider profile for the API Evangelist network.
 
 - APIs.json: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
 - Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=hku-api-evangelist&utm_content=repo
 
 ## Type
 
-- Type: Index
+- Type: Index (`x-type: university`, `x-category: Public Research University`)
 - Position: Consumer
 - Access: 3rd-Party
+- ROR: https://ror.org/02zhqgq86
 
 ## Tags
 
-Education, Higher Education, University, Research Data, Open Access, Hong Kong
+Education, Higher Education, University, Hong Kong, Identity Federation, Single Sign-On, Research Data, Open Access, Artificial Intelligence, Research Computing
 
-## APIs
+## Surfaces and who operates them
 
-- **HKU ITS API Developer Portal** — Azure API Management developer portal; discover/try APIs and sign up for keys (gated). Docs: https://developer.hku.hk/
-- **HKU DataHub (Figshare)** — Research-data repository on Figshare; public content via the Figshare REST API. Docs: https://docs.figshare.com/
-- **HKU Scholars Hub OAI-PMH** — DSpace institutional repository with an OAI-PMH metadata-harvesting interface. Docs: https://hub.hku.hk/
+A university is a federation of buyers. Every surface below carries an operator: `institution`
+means HKU runs the thing the contract describes, `tenant` means HKU is an account on someone
+else's platform. Tenant contracts are recorded, never stored here as HKU's own.
 
-## Plans, Rate Limits, and FinOps
+| Surface | Operator | Probed 2026-08-19 |
+|---|---|---|
+| **HKU Shibboleth Identity Provider** — `hkafidp.hku.hk`, entityID `https://hkafidp.hku.hk/idp/shibboleth`, scope `hku.hk`, registered by the Hong Kong Access Federation 2016-12-15 and exported to eduGAIN with REFEDS R&S + SIRTFI | institution | 200, signed SAML metadata, 14,831 bytes |
+| **HKU AD FS OAuth 2.0 / OpenID Connect issuer** — `adfs.hku.hk`, discovery + JWKS + UserInfo + device code + WS-Fed metadata | institution | 200 discovery, 200 JWKS, 401 UserInfo |
+| **HKU ITS API developer portal and gateway** — `developer.hku.hk` + `api.hku.hk` (Azure API Management), GenAI chat/embedding/image APIs opened to students 2026-03-17 | institution | 200 → redirects to `/signin`; gateway 404 envelope |
+| **HKU Scholars Hub OAI-PMH** — `hub.hku.hk`, DSpace | institution | 403 Cloudflare challenge — blocked, not absent |
+| **HKU DataHub** — `datahub.hku.hk` CNAME → figshare.com | tenant (Figshare) | 202, empty body |
+| **HKU Libraries discovery** — `julac-hku.primo.exlibrisgroup.com` | tenant (Ex Libris) | 200 |
+| **HKU Microsoft Entra ID tenant** — `login.microsoftonline.com/hku.hk` | tenant (Microsoft) | 200 |
 
+HKU publishes no OpenAPI, no `robots.txt` on `www.hku.hk`, no `llms.txt`, no status page and no API
+changelog, and its official GitHub org has no public repositories.
+
+## Artifacts
+
+- OpenAPI (derived from HKU's OIDC discovery document): [openapi/hku-identity-openapi.yml](openapi/hku-identity-openapi.yml)
+- Captured discovery document: [well-known/hku-adfs-openid-configuration.json](well-known/hku-adfs-openid-configuration.json)
+- JSON Schema: [json-schema/hku-openid-configuration.schema.json](json-schema/hku-openid-configuration.schema.json)
+- Examples (real captured responses): [examples/hku-identity-examples.yml](examples/hku-identity-examples.yml)
+- Authentication: [authentication/hku-authentication.yml](authentication/hku-authentication.yml)
+- Scopes: [scopes/hku-scopes.yml](scopes/hku-scopes.yml)
+- Errors: [errors/hku-errors.yml](errors/hku-errors.yml)
+- Conformance (education regime): [conformance/hku-conformance.yml](conformance/hku-conformance.yml)
+- Identity attribute vocabulary: [vocabulary/hku-identity-attributes.yml](vocabulary/hku-identity-attributes.yml)
+- JSON-LD: [json-ld/hku-organization.jsonld](json-ld/hku-organization.jsonld)
+- Spectral rules: [rules/hku-identity-rules.yml](rules/hku-identity-rules.yml)
+- Lifecycle: [lifecycle/hku-lifecycle.yml](lifecycle/hku-lifecycle.yml)
 - Plans / Pricing: [plans/hku-plans-pricing.yml](plans/hku-plans-pricing.yml)
 - Rate Limits: [rate-limits/hku-rate-limits.yml](rate-limits/hku-rate-limits.yml)
 - FinOps: [finops/hku-finops.yml](finops/hku-finops.yml)
+- Domain security: [security/hku-domain-security.yml](security/hku-domain-security.yml)
 
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
+- Modified: 2026-08-19
 
 ## Common Properties
 
 - Website: https://www.hku.hk/
 - Developer Portal: https://developer.hku.hk/
+- Identity Federation: https://hkafidp.hku.hk/idp/shibboleth
+- Research Repository: https://hub.hku.hk/
+- Library Catalog: https://julac-hku.primo.exlibrisgroup.com/discovery/search?vid=852JULAC_HKU:HKU
+- Research Computing: https://hpc.hku.hk/
+- AI Policy: https://aied.talic.hku.hk/aipolicy/
+- AI Tooling: https://genai.hku.hk/
+- Privacy Policy: https://www.hku.hk/about/policies_reports/privacy_policy.html
 - GitHub: https://github.com/hku-official
 - LinkedIn: https://www.linkedin.com/school/university-of-hong-kong/
 - Review: [review.yml](review.yml)
 
 ## Notes
 
-Verification caveats (probed 2026-06-03): `developer.hku.hk` (HTTP 200) is gated behind institutional sign-in, so individual APIs are not publicly enumerable. `datahub.hku.hk` / `hku.figshare.com` (HTTP 202) are Figshare-hosted; the public Figshare REST API (`api.figshare.com`, 200) serves their content. `hub.hku.hk` (HKU Scholars Hub, DSpace, OAI-PMH at `/oai/request`) returned HTTP 403 to automated probes — consistent with bot/WAF blocking, documented as live but not independently confirmed live. `github.com/hku-official` is the official org but has no public repositories. No endpoints were fabricated.
+**Attribution correction, 2026-08-19.** This profile previously carried eleven API entries derived
+from a single Figshare specification — altmetric, articles, authors, collections, institutions,
+oauth, other, profiles, projects, symplectic — presented as HKU APIs. They were one vendor
+document counted eleven times. The specification has been removed and HKU DataHub is now recorded
+for what it is: an HKU tenancy on Figshare's platform, HKU's data under Figshare's contract. The
+re-profile replaces them with the surfaces HKU actually operates, which are identity
+infrastructure. This lowers the score, and that is the correction working.
+
+Residual vendor-derived files remain on disk pending manual removal and are pointed at by nothing
+in `apis.yml`: `collections/` (20 files, every request against `api.figshare.com`) and
+`agentic-access/hku-agentic-access.yml` (157 operations derived from the removed Figshare spec).
+
+Access posture was also corrected: the earlier record said "Free · Self-serve signup". HKU's
+developer portal redirects every route to institutional sign-in, and API keys are issued only to
+HKU staff and students. No endpoints were fabricated.
 
 ## Maintainers
 
