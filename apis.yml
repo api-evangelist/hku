@@ -62,14 +62,13 @@ apis:
 - aid: hku:identity-federation
   name: HKU Shibboleth Identity Provider
   description: >-
-    The University of Hong Kong's own Shibboleth SAML 2.0 identity provider, entityID
-    https://hkafidp.hku.hk/idp/shibboleth, scope hku.hk. It self-publishes signed metadata (HTTP
-    200, application/xml, 14,831 bytes) declaring SAML 1.1 and SAML 2.0 SSO, single logout,
-    artifact resolution and attribute query endpoints, transient NameIDs, and the eduPerson and
-    SCHAC attributes it releases. Registered by the Hong Kong Access Federation (JUCC) on
-    2016-12-15 and exported to eduGAIN, carrying the REFEDS Research and Scholarship entity
-    category and SIRTFI assurance certification. This is HKU's most substantial institution-operated
-    machine-readable surface and the one no catalog had recorded.
+    The University of Hong Kong's own Shibboleth SAML 2.0 identity provider, entityID https://hkafidp.hku.hk/idp/shibboleth,
+    scope hku.hk. It self-publishes signed metadata (HTTP 200, application/xml, 14,831 bytes) declaring
+    SAML 1.1 and SAML 2.0 SSO, single logout, artifact resolution and attribute query endpoints, transient
+    NameIDs, and the eduPerson and SCHAC attributes it releases. Registered by the Hong Kong Access Federation
+    (JUCC) on 2016-12-15 and exported to eduGAIN, carrying the REFEDS Research and Scholarship entity
+    category and SIRTFI assurance certification. This is HKU's most substantial institution-operated machine-readable
+    surface and the one no catalog had recorded.
   humanURL: https://www.hkaf.edu.hk/
   baseURL: https://hkafidp.hku.hk/idp/shibboleth
   tags:
@@ -89,71 +88,23 @@ apis:
     url: conformance/hku-conformance.yml
   x-operator: institution
   x-operator-evidence: >-
-    Host hkafidp.hku.hk is under HKU's own registrable domain; the metadata's Organization block
-    names The University of Hong Kong and the signing certificates are issued to
-    CN=juccaf-idp.hku.hk. HKU runs the IdP; JUCC only registers it.
+    Host hkafidp.hku.hk is under HKU's own registrable domain; the metadata's Organization block names
+    The University of Hong Kong and the signing certificates are issued to CN=juccaf-idp.hku.hk. HKU runs
+    the IdP; JUCC only registers it.
   x-probe:
     url: https://hkafidp.hku.hk/idp/shibboleth
-    status: 200
-    probed: '2026-08-19'
-- aid: hku:adfs-oidc
-  name: HKU AD FS OAuth 2.0 / OpenID Connect Issuer
-  description: >-
-    Institution-operated OpenID Connect issuer at https://adfs.hku.hk/adfs, serving a live
-    discovery document, a JWKS with an RS256 signing key, a UserInfo endpoint that returns a
-    correct 401 to invalid tokens, a device authorization endpoint, and signed WS-Federation /
-    SAML 2.0 federation metadata for entityID http://adfs.hku.hk/adfs/services/trust. Nine scopes
-    and sixteen claims are advertised. Microsoft's realm discovery reports the hku.hk domain as
-    federated to this host under the brand "The University Of Hong Kong". Not a developer-facing
-    API — relying parties are registered by HKU ITS, and there is no dynamic client registration.
-  humanURL: https://its.hku.hk/
-  baseURL: https://adfs.hku.hk/adfs
-  tags:
-  - Identity
-  - OpenID Connect
-  - Authentication
-  - SAML
-  - Single Sign-On
-  tags_raw:
-  - Identity
-  - OpenID Connect
-  - OAuth 2.0
-  - SAML
-  - Single Sign-On
-  properties:
-  - type: OpenAPI
-    url: openapi/hku-identity-openapi.yml
-  - type: WellKnown
-    url: well-known/hku-adfs-openid-configuration.json
-  - type: JSONSchema
-    url: json-schema/hku-openid-configuration.schema.json
-  - type: OAuthScopes
-    url: scopes/hku-scopes.yml
-  - type: Authentication
-    url: authentication/hku-authentication.yml
-  - type: ErrorCatalog
-    url: errors/hku-errors.yml
-  - type: Examples
-    url: examples/hku-identity-examples.yml
-  x-operator: institution
-  x-operator-evidence: >-
-    adfs.hku.hk is HKU's own host; the issuer, access_token_issuer and signing keys are all HKU's.
-    Microsoft supplies AD FS as software, not as a service — no shared vendor host is involved.
-  x-probe:
-    url: https://adfs.hku.hk/adfs/.well-known/openid-configuration
     status: 200
     probed: '2026-08-19'
 - aid: hku:its-api-portal
   name: HKU ITS API Developer Portal and Gateway
   description: >-
-    HKU Information Technology Services runs an Azure API Management gateway at api.hku.hk and a
-    developer portal at developer.hku.hk. Since 17 March 2026 the portal has issued subscription
-    keys to students as well as staff for chat-completion, embedding and image-generation APIs
-    across several hosted models. The gateway is live and answers in the APIM error envelope
-    ({"statusCode":404,"message":"Resource not found"}), but every portal route — /apis,
-    /docs/services — redirects to /signin, so the API catalog, its specifications, its scopes and
-    its rate limits are not publicly enumerable. Catalogued as a real institution-operated surface
-    whose contract is not published, not as an absence.
+    HKU Information Technology Services runs an Azure API Management gateway at api.hku.hk and a developer
+    portal at developer.hku.hk. Since 17 March 2026 the portal has issued subscription keys to students
+    as well as staff for chat-completion, embedding and image-generation APIs across several hosted models.
+    The gateway is live and answers in the APIM error envelope ({"statusCode":404,"message":"Resource
+    not found"}), but every portal route — /apis, /docs/services — redirects to /signin, so the API catalog,
+    its specifications, its scopes and its rate limits are not publicly enumerable. Catalogued as a real
+    institution-operated surface whose contract is not published, not as an absence.
   humanURL: https://developer.hku.hk/
   baseURL: https://api.hku.hk
   tags:
@@ -169,10 +120,9 @@ apis:
     url: https://developer.hku.hk/
   x-operator: institution
   x-operator-evidence: >-
-    Both hosts are under hku.hk and front-end to Azure Front Door endpoints provisioned for HKU
-    (developer-hku-hk-*.z01.azurefd.net, api-hku-hk-*.z01.azurefd.net). The APIs behind the
-    gateway are HKU ITS's own; Azure API Management is hosting, not the contract. Reclassified
-    from tenant on 2026-08-19.
+    Both hosts are under hku.hk and front-end to Azure Front Door endpoints provisioned for HKU (developer-hku-hk-*.z01.azurefd.net,
+    api-hku-hk-*.z01.azurefd.net). The APIs behind the gateway are HKU ITS's own; Azure API Management
+    is hosting, not the contract. Reclassified from tenant on 2026-08-19.
   x-probe:
   - url: https://developer.hku.hk/
     status: 200
@@ -185,13 +135,12 @@ apis:
 - aid: hku:scholars-hub-oai
   name: HKU Scholars Hub OAI-PMH
   description: >-
-    HKU Scholars Hub is the University's DSpace-based open-access institutional repository and
-    current research information system, on HKU's own host. It is documented as exposing an
-    OAI-PMH metadata interface at https://hub.hku.hk/oai/request. Every automated probe on
-    2026-08-19 — verb=Identify, /server/api, /rest/ — returned HTTP 403 behind a Cloudflare
-    managed challenge, including with a browser User-Agent. The surface is live and
-    institution-hosted but unreadable to machines as deployed, so no OAI-PMH conformance is
-    credited.
+    HKU Scholars Hub is the University's DSpace-based open-access institutional repository and current
+    research information system, on HKU's own host. It is documented as exposing an OAI-PMH metadata interface
+    at https://hub.hku.hk/oai/request. Every automated probe on 2026-08-19 — verb=Identify, /server/api,
+    /rest/ — returned HTTP 403 behind a Cloudflare managed challenge, including with a browser User-Agent.
+    The surface is live and institution-hosted but unreadable to machines as deployed, so no OAI-PMH conformance
+    is credited.
   humanURL: https://hub.hku.hk/
   baseURL: https://hub.hku.hk/oai/request
   tags:
@@ -205,8 +154,8 @@ apis:
     url: https://hub.hku.hk/
   x-operator: institution
   x-operator-evidence: >-
-    hub.hku.hk resolves to Cloudflare in front of HKU's own DSpace deployment; the repository, its
-    content and its DOIs are HKU's. DSpace is open-source software, not a vendor tenancy.
+    hub.hku.hk resolves to Cloudflare in front of HKU's own DSpace deployment; the repository, its content
+    and its DOIs are HKU's. DSpace is open-source software, not a vendor tenancy.
   x-probe:
     url: https://hub.hku.hk/oai/request?verb=Identify
     status: 403
@@ -215,13 +164,13 @@ apis:
 - aid: hku:datahub-figshare
   name: HKU DataHub (Figshare tenancy)
   description: >-
-    HKU DataHub is the University's research-data repository, running as a Figshare tenancy —
-    datahub.hku.hk is a CNAME to figshare.com and the same content is served at hku.figshare.com.
-    The data, the collections and the DOIs are HKU's; the API contract behind them is Figshare's
-    generic api.figshare.com/v2 and belongs to Figshare's own profile. Recorded here as a tenant
-    relationship only. The eleven Figshare-derived "HKU" API entries this repo carried before
-    2026-08-19 — altmetric, articles, authors, collections, institutions, oauth, other, profiles,
-    projects, symplectic — were one vendor document counted eleven times and have been removed.
+    HKU DataHub is the University's research-data repository, running as a Figshare tenancy — datahub.hku.hk
+    is a CNAME to figshare.com and the same content is served at hku.figshare.com. The data, the collections
+    and the DOIs are HKU's; the API contract behind them is Figshare's generic api.figshare.com/v2 and
+    belongs to Figshare's own profile. Recorded here as a tenant relationship only. The eleven Figshare-derived
+    "HKU" API entries this repo carried before 2026-08-19 — altmetric, articles, authors, collections,
+    institutions, oauth, other, profiles, projects, symplectic — were one vendor document counted eleven
+    times and have been removed.
   humanURL: https://datahub.hku.hk/
   baseURL: https://datahub.hku.hk/
   x-vendor-api: https://api.figshare.com/v2
@@ -235,8 +184,8 @@ apis:
     url: https://datahub.hku.hk/
   x-operator: tenant
   x-operator-evidence: >-
-    dig datahub.hku.hk -> figshare.com. The host answers 202 with a zero-byte body to non-browser
-    clients. api.figshare.com is a generic vendor host shared by every Figshare customer.
+    dig datahub.hku.hk -> figshare.com. The host answers 202 with a zero-byte body to non-browser clients.
+    api.figshare.com is a generic vendor host shared by every Figshare customer.
   x-vendor: figshare
   x-probe:
     url: https://datahub.hku.hk/
@@ -246,11 +195,10 @@ apis:
 - aid: hku:library-primo
   name: HKU Libraries Discovery (Ex Libris Primo tenancy)
   description: >-
-    HKU Libraries' discovery layer runs on Ex Libris Primo VE at
-    julac-hku.primo.exlibrisgroup.com under the JULAC consortium view 852JULAC_HKU. The catalog
-    records are HKU's; the discovery and Alma APIs are Ex Libris's, published on
-    developers.exlibrisgroup.com and gated behind an institutional API key. Recorded as a tenant
-    relationship; no vendor contract is stored under HKU.
+    HKU Libraries' discovery layer runs on Ex Libris Primo VE at julac-hku.primo.exlibrisgroup.com under
+    the JULAC consortium view 852JULAC_HKU. The catalog records are HKU's; the discovery and Alma APIs
+    are Ex Libris's, published on developers.exlibrisgroup.com and gated behind an institutional API key.
+    Recorded as a tenant relationship; no vendor contract is stored under HKU.
   humanURL: https://lib.hku.hk/
   baseURL: https://julac-hku.primo.exlibrisgroup.com/discovery
   tags:
@@ -264,8 +212,8 @@ apis:
     url: https://lib.hku.hk/
   x-operator: tenant
   x-operator-evidence: >-
-    Host is exlibrisgroup.com with an HKU/JULAC view identifier. Institution-specific account on a
-    vendor platform.
+    Host is exlibrisgroup.com with an HKU/JULAC view identifier. Institution-specific account on a vendor
+    platform.
   x-vendor: ex-libris
   x-probe:
     url: https://julac-hku.primo.exlibrisgroup.com/discovery/search?vid=852JULAC_HKU:HKU
@@ -274,11 +222,11 @@ apis:
 - aid: hku:entra-tenant
   name: HKU Microsoft Entra ID Tenant
   description: >-
-    HKU's Microsoft Entra ID tenant (42f9b54e-2477-41ba-bf09-7a0d2a83ff09) publishes a live OpenID
-    Connect discovery document for the hku.hk domain. It is institution-specific and
-    machine-readable, but it is served from Microsoft's host under Microsoft's contract, and
-    Microsoft's realm discovery shows authentication delegated back to HKU's own AD FS. Recorded
-    as a tenant relationship, not as an HKU API.
+    HKU's Microsoft Entra ID tenant (42f9b54e-2477-41ba-bf09-7a0d2a83ff09) publishes a live OpenID Connect
+    discovery document for the hku.hk domain. It is institution-specific and machine-readable, but it
+    is served from Microsoft's host under Microsoft's contract, and Microsoft's realm discovery shows
+    authentication delegated back to HKU's own AD FS. Recorded as a tenant relationship, not as an HKU
+    API.
   humanURL: https://its.hku.hk/
   baseURL: https://login.microsoftonline.com/hku.hk/v2.0
   tags:
@@ -295,6 +243,50 @@ apis:
     url: https://login.microsoftonline.com/hku.hk/v2.0/.well-known/openid-configuration
     status: 200
     probed: '2026-08-19'
+- aid: hku:hku-discovery-api
+  name: University of Hong Kong Discovery API
+  description: Metadata documents that describe the identity service.
+  humanURL: https://www.hkaf.edu.hk/
+  baseURL: https://hkafidp.hku.hk/idp/shibboleth
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-discovery-api-openapi.yml
+  - type: WellKnown
+    url: well-known/hku-adfs-openid-configuration.json
+  - type: JSONSchema
+    url: json-schema/hku-openid-configuration.schema.json
+  - type: OAuthScopes
+    url: scopes/hku-scopes.yml
+  - type: Authentication
+    url: authentication/hku-authentication.yml
+  - type: ErrorCatalog
+    url: errors/hku-errors.yml
+  - type: Examples
+    url: examples/hku-identity-examples.yml
+- aid: hku:hku-oauth-api
+  name: University of Hong Kong O Auth API
+  description: OAuth 2.0 / OpenID Connect protocol endpoints.
+  humanURL: https://www.hkaf.edu.hk/
+  baseURL: https://hkafidp.hku.hk/idp/shibboleth
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/hku-oauth-api-openapi.yml
+  - type: WellKnown
+    url: well-known/hku-adfs-openid-configuration.json
+  - type: JSONSchema
+    url: json-schema/hku-openid-configuration.schema.json
+  - type: OAuthScopes
+    url: scopes/hku-scopes.yml
+  - type: Authentication
+    url: authentication/hku-authentication.yml
+  - type: ErrorCatalog
+    url: errors/hku-errors.yml
+  - type: Examples
+    url: examples/hku-identity-examples.yml
 common:
 - type: Website
   url: https://www.hku.hk/
