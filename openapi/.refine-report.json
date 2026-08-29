@@ -1,32 +1,20 @@
 {
   "provider": "hku",
   "sources": [
-    "hku-altmetric-api-openapi.yml",
-    "hku-articles-api-openapi.yml",
-    "hku-authors-api-openapi.yml",
-    "hku-collections-api-openapi.yml",
-    "hku-institutions-api-openapi.yml",
-    "hku-oauth-api-openapi.yml",
-    "hku-other-api-openapi.yml",
-    "hku-profiles-api-openapi.yml",
-    "hku-projects-api-openapi.yml",
-    "hku-symplectic-api-openapi.yml"
+    "hku-identity-openapi.yml"
   ],
   "outputs": [
-    "hku-altmetric-api-openapi.yml",
-    "hku-articles-api-openapi.yml",
-    "hku-authors-api-openapi.yml",
-    "hku-collections-api-openapi.yml",
-    "hku-institutions-api-openapi.yml",
-    "hku-oauth-api-openapi.yml",
-    "hku-other-api-openapi.yml",
-    "hku-profiles-api-openapi.yml",
-    "hku-projects-api-openapi.yml",
-    "hku-symplectic-api-openapi.yml"
+    "hku-discovery-api-openapi.yml",
+    "hku-oauth-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "archived openapi/hku-identity-openapi.yml"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "hku-identity-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+2 apis, 8 total)"
+  ],
   "skipped": []
 }

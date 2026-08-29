@@ -1,0 +1,367 @@
+openapi: 3.1.0
+info:
+  title: HKU Identity Federation API
+  version: '2026-08-19'
+  summary: OAuth 2.0 / OpenID Connect endpoints published by the University of Hong Kong's own AD FS identity provider.
+  description: >-
+    Machine-readable description of the OAuth 2.0 / OpenID Connect surface that the University of
+    Hong Kong operates on its own host, adfs.hku.hk. Every path, endpoint URL, scope, grant type,
+    response type and claim in this document is transcribed from HKU's live OpenID Connect
+    discovery document at https://adfs.hku.hk/adfs/.well-known/openid-configuration (HTTP 200,
+    application/json, 1,874 bytes, fetched 2026-08-19). Nothing here is invented: paths that the
+    discovery document does not advertise are not present, and the observed status code of every
+    endpoint under an unauthenticated probe is recorded in x-probe on the operation.
+
+    HKU does not publish this as a developer-facing API — it is the institution's federated login
+    infrastructure, used by HKU applications and by service providers HKU trusts. It is catalogued
+    here because it is one of the few genuinely institution-operated, machine-readable contracts
+    the University serves from its own registrable domain.
+  contact:
+    name: The University of Hong Kong — Information Technology Services
+    url: https://its.hku.hk/
+  license:
+    name: Not stated
+x-operator: institution
+x-operator-rationale: >-
+  adfs.hku.hk is under hku.hk, the University's own registrable domain, and the AD FS deployment,
+  its signing keys and its trust relationships are operated by HKU ITS. Microsoft supplies the
+  software; HKU runs the service and issues the tokens.
+x-provenance:
+  generated: '2026-08-19'
+  method: derived
+  source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+  source_saved: well-known/hku-adfs-openid-configuration.json
+  note: >-
+    Derived, not published by HKU. HKU publishes the discovery document; API Evangelist derived
+    this OpenAPI from it. Do not credit HKU with an OpenAPI they did not write.
+servers:
+- url: https://adfs.hku.hk
+  description: HKU AD FS — institution-operated identity provider (Shibboleth IdP is separate, see conformance/).
+tags:
+- name: Discovery
+  description: Metadata documents that describe the identity service.
+- name: OAuth
+  description: OAuth 2.0 / OpenID Connect protocol endpoints.
+paths:
+  /adfs/.well-known/openid-configuration:
+    get:
+      tags: [Discovery]
+      operationId: getOpenIdConfiguration
+      summary: OpenID Connect discovery document
+      description: Returns the OpenID Provider metadata for the HKU AD FS issuer https://adfs.hku.hk/adfs.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+        bytes: 1874
+        probed: '2026-08-19'
+      responses:
+        '200':
+          description: OpenID Provider metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenIdConfiguration'
+  /adfs/discovery/keys:
+    get:
+      tags: [Discovery]
+      operationId: getJwks
+      summary: JSON Web Key Set
+      description: Public signing keys (RS256) used to verify id_tokens and access tokens issued by HKU AD FS.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/adfs/discovery/keys
+        status: 200
+        content_type: application/json
+        bytes: 1468
+        probed: '2026-08-19'
+      responses:
+        '200':
+          description: JWK Set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonWebKeySet'
+  /adfs/oauth2/authorize/:
+    get:
+      tags: [OAuth]
+      operationId: authorize
+      summary: Authorization endpoint
+      description: >-
+        OAuth 2.0 authorization endpoint. Advertised by the discovery document. An unauthenticated
+        probe with no query parameters returned HTTP 503 from the AD FS edge, so the request
+        parameters below are the RFC 6749 / OpenID Connect Core parameters the advertised
+        response_types and response_modes imply, not parameters observed in a successful call.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/adfs/oauth2/authorize/
+        status: 503
+        note: Service Unavailable to an unauthenticated probe with no parameters; endpoint is advertised in discovery.
+        probed: '2026-08-19'
+      parameters:
+      - name: client_id
+        in: query
+        required: true
+        schema: { type: string }
+      - name: response_type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum: [code, id_token, code id_token, id_token token, code token, code id_token token]
+      - name: redirect_uri
+        in: query
+        required: true
+        schema: { type: string, format: uri }
+      - name: scope
+        in: query
+        schema: { type: string }
+        description: Space-delimited subset of the scopes in scopes_supported.
+      - name: response_mode
+        in: query
+        schema:
+          type: string
+          enum: [query, fragment, form_post]
+      - name: state
+        in: query
+        schema: { type: string }
+      - name: nonce
+        in: query
+        schema: { type: string }
+      responses:
+        '302':
+          description: Redirect back to redirect_uri carrying the authorization response.
+        '503':
+          description: Returned to unparameterised public probes.
+  /adfs/oauth2/token/:
+    post:
+      tags: [OAuth]
+      operationId: token
+      summary: Token endpoint
+      description: >-
+        OAuth 2.0 token endpoint. Supported grant types and client authentication methods are
+        transcribed from the discovery document.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/adfs/oauth2/token/
+        status: 411
+        note: POST with no body returned 411 Length Required; GET returned 503. Endpoint is live and advertised.
+        probed: '2026-08-19'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                  - authorization_code
+                  - refresh_token
+                  - client_credentials
+                  - urn:ietf:params:oauth:grant-type:jwt-bearer
+                  - implicit
+                  - password
+                  - srv_challenge
+                  - urn:ietf:params:oauth:grant-type:device_code
+                  - device_code
+                client_id: { type: string }
+                client_secret: { type: string }
+                code: { type: string }
+                redirect_uri: { type: string, format: uri }
+                refresh_token: { type: string }
+              required: [grant_type]
+      responses:
+        '200':
+          description: Token response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: OAuth 2.0 error response (RFC 6749 section 5.2).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+        '411':
+          description: Length Required — returned to a POST with no body.
+  /adfs/oauth2/devicecode:
+    post:
+      tags: [OAuth]
+      operationId: deviceAuthorization
+      summary: Device authorization endpoint
+      description: RFC 8628 device authorization endpoint, advertised as device_authorization_endpoint.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/adfs/oauth2/devicecode
+        status: 405
+        note: GET returns 405 Method Not Allowed — the endpoint exists and accepts POST only.
+        probed: '2026-08-19'
+      responses:
+        '200':
+          description: Device authorization response.
+        '405':
+          description: Method Not Allowed — returned to GET.
+  /adfs/userinfo:
+    get:
+      tags: [OAuth]
+      operationId: userinfo
+      summary: UserInfo endpoint
+      description: OpenID Connect UserInfo endpoint. Requires a bearer access token.
+      x-probe:
+        url: https://adfs.hku.hk/adfs/userinfo
+        status: 401
+        note: 401 with no body to an unauthenticated request and to an invalid bearer token.
+        probed: '2026-08-19'
+      responses:
+        '200':
+          description: Claims about the authenticated subject.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          description: Unauthorized — missing or invalid access token.
+  /adfs/oauth2/logout:
+    get:
+      tags: [OAuth]
+      operationId: endSession
+      summary: End-session endpoint
+      description: OpenID Connect RP-initiated logout endpoint; front-channel logout is advertised as supported.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/adfs/oauth2/logout
+        status: 503
+        note: Service Unavailable to an unparameterised public probe; endpoint is advertised in discovery.
+        probed: '2026-08-19'
+      responses:
+        '302':
+          description: Redirect after sign-out.
+        '503':
+          description: Returned to unparameterised public probes.
+  /FederationMetadata/2007-06/FederationMetadata.xml:
+    get:
+      tags: [Discovery]
+      operationId: getFederationMetadata
+      summary: WS-Federation / SAML 2.0 federation metadata
+      description: >-
+        Signed federation metadata for entityID http://adfs.hku.hk/adfs/services/trust, describing
+        the SAML 2.0 and WS-Federation endpoints and signing certificates of the HKU AD FS
+        deployment.
+      security: []
+      x-probe:
+        url: https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml
+        status: 200
+        content_type: application/samlmetadata+xml
+        bytes: 71026
+        probed: '2026-08-19'
+      responses:
+        '200':
+          description: SAML 2.0 metadata document.
+          content:
+            application/samlmetadata+xml:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access token issued by https://adfs.hku.hk/adfs, signed RS256.
+    oauth2:
+      type: oauth2
+      description: Flows transcribed from the HKU AD FS discovery document.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://adfs.hku.hk/adfs/oauth2/authorize/
+          tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+          scopes:
+            openid: Request an ID token for the signed-in HKU account.
+            profile: Release profile claims.
+            email: Release the account's email claim.
+            allatclaims: Include all claims from the underlying token in the issued token.
+            aza: Microsoft primary-refresh-token / broker scope.
+            user_impersonation: Act on behalf of the signed-in user against a relying party.
+            logon_cert: Request a logon certificate.
+            winhello_cert: Request a Windows Hello for Business certificate.
+            vpn_cert: Request a VPN client certificate.
+        clientCredentials:
+          tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+          scopes:
+            openid: Request an ID token.
+        deviceCode:
+          tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+          scopes:
+            openid: Request an ID token.
+  schemas:
+    OpenIdConfiguration:
+      type: object
+      description: OpenID Provider metadata as served by HKU AD FS.
+      required: [issuer, authorization_endpoint, token_endpoint, jwks_uri]
+      properties:
+        issuer: { type: string, format: uri, examples: ['https://adfs.hku.hk/adfs'] }
+        authorization_endpoint: { type: string, format: uri }
+        token_endpoint: { type: string, format: uri }
+        userinfo_endpoint: { type: string, format: uri }
+        end_session_endpoint: { type: string, format: uri }
+        device_authorization_endpoint: { type: string, format: uri }
+        jwks_uri: { type: string, format: uri }
+        access_token_issuer: { type: string }
+        scopes_supported: { type: array, items: { type: string } }
+        response_types_supported: { type: array, items: { type: string } }
+        response_modes_supported: { type: array, items: { type: string } }
+        grant_types_supported: { type: array, items: { type: string } }
+        subject_types_supported: { type: array, items: { type: string } }
+        id_token_signing_alg_values_supported: { type: array, items: { type: string } }
+        token_endpoint_auth_methods_supported: { type: array, items: { type: string } }
+        token_endpoint_auth_signing_alg_values_supported: { type: array, items: { type: string } }
+        claims_supported: { type: array, items: { type: string } }
+        capabilities: { type: array, items: { type: string } }
+        frontchannel_logout_supported: { type: boolean }
+        frontchannel_logout_session_supported: { type: boolean }
+        microsoft_multi_refresh_token: { type: boolean }
+        as_access_token_token_binding_supported: { type: boolean }
+        as_refresh_token_token_binding_supported: { type: boolean }
+        resource_access_token_token_binding_supported: { type: boolean }
+        op_id_token_token_binding_supported: { type: boolean }
+        rp_id_token_token_binding_supported: { type: boolean }
+    JsonWebKeySet:
+      type: object
+      required: [keys]
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            properties:
+              kty: { type: string }
+              use: { type: string }
+              alg: { type: string }
+              kid: { type: string }
+              x5t: { type: string }
+              n: { type: string }
+              e: { type: string }
+              x5c: { type: array, items: { type: string } }
+    TokenResponse:
+      type: object
+      properties:
+        access_token: { type: string }
+        token_type: { type: string, examples: [bearer] }
+        expires_in: { type: integer }
+        refresh_token: { type: string }
+        id_token: { type: string }
+        scope: { type: string }
+    OAuthError:
+      type: object
+      description: RFC 6749 section 5.2 error response.
+      properties:
+        error: { type: string }
+        error_description: { type: string }
+        error_uri: { type: string, format: uri }
+security:
+- bearerAuth: []
