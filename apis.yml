@@ -283,6 +283,8 @@ apis:
   humanURL: https://www.hkaf.edu.hk/
   baseURL: https://hkafidp.hku.hk/idp/shibboleth
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
