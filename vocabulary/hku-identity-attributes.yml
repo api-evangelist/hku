@@ -1,0 +1,78 @@
+generated: '2026-08-19'
+method: searched
+source: https://hkafidp.hku.hk/idp/shibboleth
+sources:
+- https://hkafidp.hku.hk/idp/shibboleth
+- https://mds.edugain.org/edugain-v2.xml
+- https://adfs.hku.hk/adfs/.well-known/openid-configuration
+x-operator: institution
+name: HKU Identity Attribute Vocabulary
+description: >-
+  The attribute vocabulary the University of Hong Kong actually asserts about its people, read
+  from the RequestedAttribute / saml:Attribute declarations in HKU's own published SAML metadata
+  and from claims_supported in HKU's OpenID Connect discovery document. This is the only published
+  data vocabulary found on an HKU-operated host: it is eduPerson and SCHAC, the standard
+  research-and-education schemas, not an HKU invention.
+schemas:
+- name: eduPerson / SCHAC (SAML, hkafidp.hku.hk)
+  namespace: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+  terms:
+  - name: eduPersonPrincipalName
+    oid: urn:oid:1.3.6.1.4.1.5923.1.1.1.6
+    description: Scoped principal name, scope hku.hk.
+  - name: eduPersonScopedAffiliation
+    oid: urn:oid:1.3.6.1.4.1.5923.1.1.1.9
+    description: Affiliation scoped to hku.hk (student, faculty, staff, member, affiliate).
+  - name: eduPersonAffiliation
+    oid: urn:oid:1.3.6.1.4.1.5923.1.1.1.1
+    description: Unscoped affiliation with the institution.
+  - name: eduPersonEntitlement
+    oid: urn:oid:1.3.6.1.4.1.5923.1.1.1.7
+    description: URI-valued entitlements used for resource authorization.
+  - name: eduPersonTargetedID
+    oid: urn:oid:1.3.6.1.4.1.5923.1.1.1.10
+    description: Persistent, pairwise, non-reassigned identifier per service provider.
+  - name: schacHomeOrganization
+    oid: urn:oid:1.3.6.1.4.1.25178.1.2.9
+    description: Home organization domain, hku.hk.
+  - name: displayName
+    oid: urn:oid:2.16.840.1.113730.3.1.241
+  - name: commonName
+    oid: urn:oid:2.5.4.3
+  - name: givenName
+    oid: urn:oid:2.5.4.42
+  - name: surname
+    oid: urn:oid:2.5.4.4
+  - name: mail
+    oid: urn:oid:0.9.2342.19200300.100.1.3
+- name: OIDC claims (adfs.hku.hk)
+  namespace: https://adfs.hku.hk/adfs
+  terms:
+  - name: sub
+    description: Pairwise subject identifier — subject_types_supported is pairwise only.
+  - name: upn
+    description: User principal name of the HKU account.
+  - name: unique_name
+  - name: sid
+  - name: auth_time
+  - name: mfa_auth_time
+    description: Time of the most recent multi-factor authentication.
+  - name: pwd_exp
+    description: Seconds until the account password expires.
+  - name: pwd_url
+    description: Password-change URL surfaced to the relying party.
+  - name: nonce
+  - name: at_hash
+  - name: c_hash
+  - name: aud
+  - name: iss
+  - name: iat
+  - name: exp
+  - name: nbf
+privacyPosture:
+  nameIdFormat: urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+  subjectType: pairwise
+  note: >-
+    Both HKU identity surfaces default to non-correlatable subject identifiers — transient SAML
+    NameIDs and pairwise OIDC subjects. That is a deliberate privacy choice and it is the reason
+    eduPersonTargetedID is present as the persistent alternative.

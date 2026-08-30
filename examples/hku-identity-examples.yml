@@ -1,0 +1,65 @@
+generated: '2026-08-19'
+method: probed
+source: https://adfs.hku.hk
+x-operator: institution
+note: >-
+  Real responses captured from HKU-operated hosts on 2026-08-19. Nothing is synthesized. Where a
+  response was empty or a challenge page, that is recorded as the example, because that is what a
+  machine client actually receives.
+examples:
+- name: OpenID Connect discovery document
+  request: GET https://adfs.hku.hk/adfs/.well-known/openid-configuration
+  status: 200
+  contentType: application/json
+  bytes: 1874
+  body_file: well-known/hku-adfs-openid-configuration.json
+- name: JSON Web Key Set
+  request: GET https://adfs.hku.hk/adfs/discovery/keys
+  status: 200
+  contentType: application/json
+  bytes: 1468
+  body_excerpt: '{"keys":[{"kty":"RSA","use":"sig","alg":"RS256","kid":"7f_vlmG-0nFWZFlTnwMLmuzrRA0", ... }]}'
+  note: Public signing key only; the full key material is retrievable from the live endpoint and is not copied here.
+- name: Shibboleth IdP metadata
+  request: GET https://hkafidp.hku.hk/idp/shibboleth
+  status: 200
+  contentType: application/xml
+  bytes: 14831
+  body_excerpt: '<EntityDescriptor entityID="https://hkafidp.hku.hk/idp/shibboleth"> ... <shibmd:Scope regexp="false">hku.hk</shibmd:Scope>'
+- name: AD FS federation metadata
+  request: GET https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml
+  status: 200
+  contentType: application/samlmetadata+xml
+  bytes: 71026
+  body_excerpt: '<EntityDescriptor entityID="http://adfs.hku.hk/adfs/services/trust"> ... <ds:Signature>'
+- name: eduGAIN interfederation entry
+  request: GET https://mds.edugain.org/edugain-v2.xml
+  status: 200
+  bytes: 92941932
+  match: 'entityID="https://hkafidp.hku.hk/idp/shibboleth"'
+  body_excerpt: '<mdrpi:RegistrationInfo registrationAuthority="https://hkaf.edu.hk" registrationInstant="2016-12-15T07:04:40Z"/> ... <mdui:DisplayName xml:lang="en">The University of Hong Kong</mdui:DisplayName>'
+  note: Third-party aggregate, not an HKU host; used only to confirm the registration of HKU's own entity.
+- name: API gateway, unauthenticated
+  request: GET https://api.hku.hk/
+  status: 404
+  contentType: application/json
+  body: '{ "statusCode": 404, "message": "Resource not found" }'
+  note: Azure API Management error envelope. The gateway is live; its routes are not public.
+- name: Developer portal, unauthenticated
+  request: GET https://developer.hku.hk/apis
+  status: 200
+  redirect: https://developer.hku.hk/signin?returnUrl=%2Fapis
+  title: Sign in - HKU ITS developer portal
+  note: Every route redirects to sign-in. A 200 here is a sign-in page, not a catalog.
+- name: Institutional repository, machine client
+  request: GET https://hub.hku.hk/oai/request?verb=Identify
+  status: 403
+  contentType: text/html
+  bytes: 5790
+  title: Just a moment...
+  note: Cloudflare managed challenge, returned with a full browser User-Agent as well.
+- name: Research data repository, machine client
+  request: GET https://datahub.hku.hk/
+  status: 202
+  bytes: 0
+  note: Figshare edge returns an empty 202. Tenant surface — the contract behind it is Figshare's.

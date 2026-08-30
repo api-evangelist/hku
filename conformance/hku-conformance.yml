@@ -1,0 +1,135 @@
+generated: '2026-08-19'
+method: probed
+source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+x-operator: institution
+regime: education
+note: >-
+  Conformance against the Kin Score `education` regime standards, probed on 2026-08-19 against
+  HKU's own hosts. Reward-only: a standard is marked conforms true only where a live document on
+  an HKU host proves it. Where HKU's repository software plausibly implements a standard but the
+  host blocked the probe, conforms is null and the reason is recorded — an unverified claim is not
+  a conformance.
+standards:
+- id: saml
+  conforms: true
+  operator: institution
+  evidence: >-
+    Two independent institution-operated SAML 2.0 metadata documents. (1)
+    https://hkafidp.hku.hk/idp/shibboleth — 200, application/xml, 14,831 bytes, entityID
+    https://hkafidp.hku.hk/idp/shibboleth, IDPSSODescriptor and AttributeAuthorityDescriptor with
+    protocolSupportEnumeration urn:oasis:names:tc:SAML:2.0:protocol, HTTP-POST / HTTP-Redirect /
+    SOAP bindings, transient NameID. (2)
+    https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml — 200,
+    application/samlmetadata+xml, 71,026 bytes, signed, entityID
+    http://adfs.hku.hk/adfs/services/trust.
+- id: shibboleth
+  conforms: true
+  operator: institution
+  evidence: >-
+    The IdP at hkafidp.hku.hk is a Shibboleth IdP: its metadata carries the Shibboleth metadata
+    extension <shibmd:Scope regexp="false">hku.hk</shibmd:Scope> on both the IDPSSODescriptor and
+    the AttributeAuthorityDescriptor, and exposes the Shibboleth-specific SSO profile at
+    /idp/profile/Shibboleth/SSO alongside the SAML 1.1 and SAML 2.0 profiles. The entity is
+    registered by the Hong Kong Access Federation (registrationAuthority https://hkaf.edu.hk,
+    registrationInstant 2016-12-15) and exported to eduGAIN — found in
+    https://mds.edugain.org/edugain-v2.xml on 2026-08-19 with DisplayName "The University of Hong
+    Kong". It declares the REFEDS Research and Scholarship entity category and SIRTFI assurance.
+- id: oai-pmh
+  conforms: null
+  operator: institution
+  evidence: >-
+    HKU Scholars Hub (hub.hku.hk) is a DSpace institutional repository on HKU's own domain and is
+    documented as exposing OAI-PMH at https://hub.hku.hk/oai/request. Every probe on 2026-08-19 —
+    /oai/request?verb=Identify, /server/api, /rest/ — returned HTTP 403 with a Cloudflare
+    interstitial ("Just a moment..."), including with a browser User-Agent. The host is live and
+    protected, not absent; the OAI-PMH verb response could not be read, so no conformance is
+    credited.
+  probe:
+    url: https://hub.hku.hk/oai/request?verb=Identify
+    status: 403
+    body: Cloudflare managed challenge
+- id: orcid
+  conforms: null
+  operator: institution
+  evidence: >-
+    HKU Scholars Hub is the University's CRIS and is the surface where ORCID integration would
+    appear. It is Cloudflare-blocked to probes, so no ORCID authority record, ORCID member API
+    use, or ORCID claim could be verified from a machine-readable source.
+- id: datacite
+  conforms: null
+  operator: tenant
+  evidence: >-
+    HKU DataHub (datahub.hku.hk, CNAME to figshare.com) mints DOIs, which in the Figshare platform
+    are DataCite DOIs. The DOI registration agency contract is Figshare's, not HKU's, and the host
+    returned HTTP 202 with a zero-byte body to every probe, so nothing was verified on an HKU host.
+- id: crossref
+  conforms: false
+  operator: institution
+  evidence: No Crossref member deposit surface was found on any hku.hk host.
+- id: scim
+  conforms: false
+  operator: institution
+  evidence: >-
+    No SCIM 2.0 service provider configuration on any HKU host; /scim/v2/ServiceProviderConfig
+    was not advertised in any discovery document found.
+- id: lti
+  conforms: false
+  operator: institution
+  evidence: >-
+    HKU's learning management system is Moodle-based and behind institutional sign-in; no public
+    LTI platform registration, tool configuration, or LTI Advantage security JWKS was found on an
+    HKU host.
+- id: oneroster
+  conforms: false
+  operator: institution
+  evidence: No OneRoster REST endpoint or CSV bulk surface found.
+- id: ed-fi
+  conforms: false
+  operator: institution
+  evidence: Ed-Fi is a US K-12 / state-agency standard; no Ed-Fi ODS surface found and none expected.
+- id: caliper
+  conforms: false
+  operator: institution
+  evidence: No Caliper Analytics event store or sensor endpoint found.
+- id: qti
+  conforms: false
+  operator: institution
+  evidence: No QTI assessment interchange surface found.
+adjacentStandards:
+- id: openid-connect-discovery-1.0
+  conforms: true
+  operator: institution
+  evidence: >-
+    https://adfs.hku.hk/adfs/.well-known/openid-configuration returns 200 application/json with
+    issuer, authorization_endpoint, token_endpoint, userinfo_endpoint, jwks_uri,
+    scopes_supported, response_types_supported and claims_supported.
+- id: rfc7517-jwks
+  conforms: true
+  operator: institution
+  evidence: https://adfs.hku.hk/adfs/discovery/keys returns 200 application/json, a JWK Set with an RS256 signing key.
+- id: rfc8628-device-authorization
+  conforms: true
+  operator: institution
+  evidence: >-
+    device_authorization_endpoint https://adfs.hku.hk/adfs/oauth2/devicecode is advertised in
+    discovery and returns 405 to GET, confirming a POST-only endpoint.
+- id: rfc9116-security-txt
+  conforms: false
+  operator: institution
+  evidence: No /.well-known/security.txt on www.hku.hk.
+- id: robots-txt
+  conforms: false
+  operator: institution
+  evidence: https://www.hku.hk/robots.txt returns 404 — the University's main host publishes no robots.txt.
+- id: llms-txt
+  conforms: false
+  operator: institution
+  evidence: https://www.hku.hk/llms.txt returns 404.
+- id: openapi
+  conforms: false
+  operator: institution
+  evidence: >-
+    No OpenAPI is published by HKU on any HKU host. developer.hku.hk is Azure API Management and
+    redirects every route to /signin, so its specifications are not publicly retrievable. The
+    OpenAPI in this repo is DERIVED by API Evangelist from HKU's discovery document and is marked
+    as such.

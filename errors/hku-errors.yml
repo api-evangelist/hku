@@ -1,0 +1,73 @@
+generated: '2026-08-19'
+method: probed
+source: https://adfs.hku.hk
+x-operator: institution
+note: >-
+  HKU publishes no error catalog. Every entry below is an HTTP response actually observed against
+  an HKU-operated host on 2026-08-19, or an error format the OAuth 2.0 specification requires of
+  the endpoints HKU advertises (marked standard: true, observed: false). No error was invented to
+  fill the catalog.
+errors:
+- status: 404
+  host: api.hku.hk
+  observed: true
+  body: '{ "statusCode": 404, "message": "Resource not found" }'
+  contentType: application/json
+  description: >-
+    The api.hku.hk gateway is live and answers in the Azure API Management error envelope. Its
+    routes are not publicly enumerable, so every unauthenticated path returns this shape.
+- status: 401
+  host: adfs.hku.hk
+  path: /adfs/userinfo
+  observed: true
+  body: ''
+  description: UserInfo endpoint returns a bodyless 401 to a missing or invalid bearer token.
+- status: 503
+  host: adfs.hku.hk
+  paths: [/adfs/oauth2/authorize/, /adfs/oauth2/token/, /adfs/oauth2/logout]
+  observed: true
+  contentType: text/html
+  description: >-
+    HTML "Service Unavailable" returned by the AD FS edge to unparameterised public probes of the
+    interactive OAuth endpoints. The endpoints are advertised in discovery and are not dead.
+- status: 411
+  host: adfs.hku.hk
+  path: /adfs/oauth2/token/
+  observed: true
+  contentType: text/html
+  description: IIS "Length Required" returned to a POST with no body.
+- status: 405
+  host: adfs.hku.hk
+  path: /adfs/oauth2/devicecode
+  observed: true
+  description: Method Not Allowed to GET — the device authorization endpoint accepts POST only.
+- status: 400
+  host: hkafidp.hku.hk
+  path: /idp/profile/SAML2/Redirect/SSO
+  observed: true
+  contentType: text/html
+  title: Web Login Service - Stale Request
+  description: >-
+    Shibboleth's standard stale-request page, returned when an SSO request arrives without a valid
+    conversation key. Confirms a live Shibboleth IdP rather than a placeholder.
+- status: 403
+  host: hub.hku.hk
+  paths: [/oai/request, /server/api, /rest/]
+  observed: true
+  contentType: text/html
+  description: >-
+    Cloudflare managed challenge ("Just a moment..."). This is an edge decision about automated
+    clients, not a repository error — the OAI-PMH surface is unreadable to machines as deployed.
+- status: 202
+  host: datahub.hku.hk
+  observed: true
+  bytes: 0
+  description: >-
+    Figshare's edge answers HKU DataHub requests with a 202 and a zero-byte body to non-browser
+    clients. A 2xx status with no content is not a working surface; treat as unreadable.
+- status: 400
+  standard: true
+  observed: false
+  contentType: application/json
+  schema: '{ "error": "...", "error_description": "...", "error_uri": "..." }'
+  description: RFC 6749 section 5.2 token-endpoint error response. Required of the advertised endpoint; not observed because no client credentials are held.

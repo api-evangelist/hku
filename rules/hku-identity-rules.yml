@@ -1,0 +1,94 @@
+# Spectral ruleset for the HKU identity surface.
+# generated: 2026-08-19
+# method: generated
+# source: openapi/hku-identity-openapi.yml
+# x-operator: institution (the surface); the ruleset itself is API Evangelist's, not HKU's.
+# Built-in Spectral functions only — no custom JS.
+extends: []
+documentationUrl: https://apievangelist.com/
+rules:
+  hku-info-title:
+    description: The document must carry a title.
+    given: $.info
+    severity: error
+    then:
+      field: title
+      function: truthy
+  hku-info-description-length:
+    description: The description must explain what the surface is and who operates it.
+    given: $.info
+    severity: warn
+    then:
+      field: description
+      function: length
+      functionOptions:
+        min: 200
+  hku-operator-declared:
+    description: Every HKU document must declare x-operator, because attribution is the whole point of the university profile.
+    given: $
+    severity: error
+    then:
+      field: x-operator
+      function: pattern
+      functionOptions:
+        match: '^(institution|tenant|vendor|placeholder)$'
+  hku-provenance-block:
+    description: Every derived document must carry x-provenance with a method.
+    given: $.x-provenance
+    severity: error
+    then:
+      field: method
+      function: pattern
+      functionOptions:
+        match: '^(searched|generated|derived|probed|none)$'
+  hku-servers-institution-host:
+    description: Servers must be on an hku.hk host; anything else belongs in a tenant record, not here.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://[a-z0-9.-]*hku\.hk'
+  hku-operation-id:
+    description: Every operation needs an operationId.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  hku-operation-probe:
+    description: Every operation must record the status code actually observed when probed.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: warn
+    then:
+      field: x-probe
+      function: truthy
+  hku-probe-status:
+    description: A probe record must carry a numeric status.
+    given: $.paths[*][*].x-probe
+    severity: warn
+    then:
+      field: status
+      function: truthy
+  hku-operation-tags:
+    description: Every operation must be tagged so the document can be split cleanly.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: warn
+    then:
+      field: tags
+      function: truthy
+  hku-security-schemes-defined:
+    description: Security schemes must be declared.
+    given: $.components
+    severity: warn
+    then:
+      field: securitySchemes
+      function: truthy
+  hku-no-vendor-servers:
+    description: A vendor host must never appear as a server on an institution document.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: '(figshare|elsevierpure|exlibrisgroup|symplectic|dataverse|instructure)\.com'

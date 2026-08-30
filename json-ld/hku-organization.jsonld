@@ -1,0 +1,45 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CollegeOrUniversity",
+  "name": "The University of Hong Kong",
+  "alternateName": "HKU",
+  "url": "https://www.hku.hk/",
+  "sameAs": [
+    "https://www.linkedin.com/school/university-of-hong-kong/",
+    "https://github.com/hku-official",
+    "https://ror.org/02zhqgq86",
+    "https://en.wikipedia.org/wiki/University_of_Hong_Kong"
+  ],
+  "foundingDate": "1911",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Pokfulam",
+    "addressRegion": "Hong Kong SAR",
+    "addressCountry": "HK"
+  },
+  "department": [
+    {
+      "@type": "Organization",
+      "name": "Information Technology Services (ITS)",
+      "url": "https://its.hku.hk/",
+      "description": "Operates the HKU ITS API developer portal, the api.hku.hk gateway, research computing, and the University's identity infrastructure."
+    },
+    {
+      "@type": "Library",
+      "name": "HKU Libraries",
+      "url": "https://lib.hku.hk/"
+    }
+  ],
+  "subOrganization": {
+    "@type": "ResearchOrganization",
+    "name": "HKU Scholars Hub",
+    "url": "https://hub.hku.hk/",
+    "description": "DSpace institutional repository and current research information system."
+  },
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "https://www.hku.hk/",
+    "note": "Derived by API Evangelist from HKU's public identity surfaces. HKU does not publish this JSON-LD; www.hku.hk serves no schema.org organization graph of its own. The ROR identifier is the Research Organization Registry record for the institution."
+  }
+}
