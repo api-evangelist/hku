@@ -46,7 +46,7 @@ accessModel:
     Corrected 2026-08-19. The prior record said "Free · Self-serve signup"; developer.hku.hk
     redirects every route to /signin and API keys are issued only to HKU staff and students, so
     there is no self-serve path for a public developer.
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hku.png
 url: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
