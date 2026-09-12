@@ -2,13 +2,11 @@
   "repo": "hku",
   "feeds": [
     {
-      "source": "https://www.hku.hk/press/rss.xml",
-      "feed_url": "https://www.hku.hk/press/rss.xml",
+      "source": "https://www.hku.hk/press/",
+      "feed_url": "https://www.hku.hk/press/",
       "title": "",
       "saved": 0,
-      "method": "feed",
-      "nature": "vendor-blog",
-      "nature_basis": "path_blog"
+      "method": "none"
     },
     {
       "source": "https://www.hku.hk/contact/",
@@ -18,16 +16,11 @@
       "method": "none"
     },
     {
-      "source": "https://www.hku.hk/press/",
-      "feed_url": "https://www.hku.hk/press/rss.xml",
-      "title": "",
-      "saved": 0,
-      "method": "discovered",
-      "nature": "vendor-blog",
-      "nature_basis": "path_blog"
+      "source": "https://www.hku.hk/press/rss.xml",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 57,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",
