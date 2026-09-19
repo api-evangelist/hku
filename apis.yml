@@ -53,6 +53,17 @@ tags:
 - University
 - Hong Kong
 - Identity Federation
+- SSO
+- Research Data
+- Open Access
+- Artificial Intelligence
+- Research Computing
+tags_raw:
+- Education
+- Higher Education
+- University
+- Hong Kong
+- Identity Federation
 - Single Sign-On
 - Research Data
 - Open Access
@@ -81,6 +92,12 @@ apis:
   humanURL: https://www.hkaf.edu.hk/
   baseURL: https://hkafidp.hku.hk/idp/shibboleth
   tags:
+  - Identity Federation
+  - Shibboleth
+  - SAML
+  - eduGAIN
+  - SSO
+  tags_raw:
   - Identity Federation
   - Shibboleth
   - SAML
@@ -187,6 +204,11 @@ apis:
   - Research Data
   - Repository
   - Figshare
+  - Tenants
+  tags_raw:
+  - Research Data
+  - Repository
+  - Figshare
   - Tenant
   properties:
   - type: Website
@@ -215,6 +237,12 @@ apis:
   - Discovery
   - Ex Libris
   - Primo
+  - Tenants
+  tags_raw:
+  - Library
+  - Discovery
+  - Ex Libris
+  - Primo
   - Tenant
   properties:
   - type: Website
@@ -239,6 +267,11 @@ apis:
   humanURL: https://its.hku.hk/
   baseURL: https://login.microsoftonline.com/hku.hk/v2.0
   tags:
+  - Identity
+  - OpenID Connect
+  - Microsoft Entra
+  - Tenants
+  tags_raw:
   - Identity
   - OpenID Connect
   - Microsoft Entra
@@ -280,6 +313,8 @@ apis:
   humanURL: https://www.hkaf.edu.hk/
   baseURL: https://hkafidp.hku.hk/idp/shibboleth
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
