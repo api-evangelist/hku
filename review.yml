@@ -3,8 +3,68 @@ name: University of Hong Kong
 description: University of Hong Kong public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
+  - date: '2026-08-19'
+    rating: 3
+    summary: >-
+      Re-profiled under the university pipeline, operator-first. Removed the Figshare attribution:
+      the eleven "HKU" APIs this profile carried were one vendor specification split by tag, and
+      HKU DataHub is now recorded as a Figshare tenancy rather than an HKU contract. In its place,
+      two genuinely institution-operated machine-readable surfaces were found and verified, neither
+      previously catalogued anywhere: a Shibboleth SAML 2.0 identity provider at hkafidp.hku.hk
+      (200, signed metadata, scope hku.hk, registered by the Hong Kong Access Federation on
+      2016-12-15, present in the eduGAIN aggregate with REFEDS Research & Scholarship and SIRTFI),
+      and an AD FS OAuth 2.0 / OpenID Connect issuer at adfs.hku.hk (200 discovery, 200 JWKS, 401
+      UserInfo, 405 device-code, 200 signed WS-Fed metadata). HKU ITS also runs a live Azure API
+      Management gateway at api.hku.hk with GenAI APIs opened to students in March 2026, but the
+      portal redirects every route to institutional sign-in, so no contract is publicly readable.
+      hub.hku.hk (DSpace / OAI-PMH) is Cloudflare-blocked to machines and datahub.hku.hk returns an
+      empty 202 — both blocked rather than absent. Access posture corrected from "self-serve" to
+      affiliation-gated. Expect the composite to fall; it was previously carrying Figshare's
+      engineering.
+    endpoints:
+      - url: https://hkafidp.hku.hk/idp/shibboleth
+        status: 200
+        note: Shibboleth IdP metadata, 14,831 bytes, scope hku.hk. Institution-operated.
+      - url: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+        status: 200
+        note: OIDC discovery, issuer https://adfs.hku.hk/adfs, 9 scopes, 16 claims.
+      - url: https://adfs.hku.hk/adfs/discovery/keys
+        status: 200
+        note: JWKS, RS256 signing key.
+      - url: https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml
+        status: 200
+        note: Signed SAML 2.0 / WS-Federation metadata, 71,026 bytes.
+      - url: https://adfs.hku.hk/adfs/userinfo
+        status: 401
+        note: Correct rejection of an invalid bearer token.
+      - url: https://mds.edugain.org/edugain-v2.xml
+        status: 200
+        note: HKU IdP entity found in the eduGAIN interfederation aggregate.
+      - url: https://developer.hku.hk/apis
+        status: 200
+        note: Redirects to /signin — a 200 that is a sign-in page, not a catalog.
+      - url: https://api.hku.hk/
+        status: 404
+        note: Azure API Management error envelope; gateway live, routes not public.
+      - url: https://hub.hku.hk/oai/request?verb=Identify
+        status: 403
+        note: Cloudflare managed challenge, with a browser User-Agent as well.
+      - url: https://datahub.hku.hk/
+        status: 202
+        note: Figshare tenancy; empty body to machine clients.
+      - url: https://julac-hku.primo.exlibrisgroup.com/discovery/search?vid=852JULAC_HKU:HKU
+        status: 200
+        note: Ex Libris Primo VE tenancy for HKU Libraries.
+      - url: https://www.hku.hk/robots.txt
+        status: 404
+        note: No robots.txt on the University's main host.
+      - url: https://www.hku.hk/llms.txt
+        status: 404
+      - url: https://api.github.com/orgs/hku-official/repos
+        status: 200
+        note: Empty array — official org, no public repositories.
   - date: '2026-06-03'
     rating: 3
     summary: >-

@@ -4,7 +4,7 @@ schema: https://www.finops.org/framework/
 provider: University of Hong Kong
 providerId: hku
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
@@ -17,7 +17,11 @@ description: >-
   APIs carry no usage-based billing; there is no invoiced cost to allocate or optimize.
   FinOps relevance is limited to the institution's own internal cloud/infrastructure
   cost management, which is not publicly disclosed.
-notes: No public usage-based API billing; University of Hong Kong's APIs are free/open or affiliation-gated.
+notes: >-
+  No public usage-based API billing. Re-checked 2026-08-19: HKU's callable APIs are the GenAI
+  services behind api.hku.hk, provided at no charge to HKU staff and students; the underlying
+  model inference is an internal cost HKU ITS absorbs and does not disclose. Nothing here is
+  invoiced to an external consumer, so there is no external FinOps surface to allocate.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
 - https://www.finops.org/framework/

@@ -1,34 +1,38 @@
-generated: '2026-07-11'
+generated: '2026-08-19'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: www.hku.hk
   https: true
-  tls_version: TLSv1.3
+  tls_version: TLSv1.2
   cert_expires: Dec 10 23:59:59 2026 GMT
   hsts: true
   hsts_max_age: 31536000
-- host: developer.hku.hk
+- host: www.hkaf.edu.hk
   https: true
   tls_version: TLSv1.3
-  cert_expires: Dec 10 23:59:59 2026 GMT
-  hsts: true
-  hsts_max_age: 31536000
-- host: datahub.hku.hk
-  https: true
-  tls_version: TLSv1.3
-  cert_expires: Nov 21 23:59:59 2026 GMT
+  cert_expires: Dec  3 23:59:59 2026 GMT
   hsts: false
+- host: hkafidp.hku.hk
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Dec 10 23:59:59 2026 GMT
+  hsts: null
 domains:
 - domain: hku.hk
   dnssec: false
   caa:
-  - 0 issue "ecert.gov.hk"
-  - 0 issue "letsencrypt.org"
-  - 0 issue "comodoca.com"
+  - 0 issue "digicert.com"
+  - 0 issue "hongkongpost.gov.hk"
+  - 0 issue "amazon.com"
   - 0 issuewild "digicert.com"
-  - 0 issue "godaddy.com"
-  - 0 issue "sectigo.com"
+  - 0 issue "globalsign.com"
+  - 0 issuewild "globalsign.com"
   spf: true
   dmarc: true
   dmarc_policy: none
+- domain: hkaf.edu.hk
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

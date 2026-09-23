@@ -4,30 +4,43 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Hong Kong
 providerId: hku
 created: '2026-06-03'
-modified: '2026-06-03'
-reconciled: false
+modified: '2026-08-19'
+reconciled: true
+method: probed
+assessed: '2026-08-19'
 tags:
 - Education
 - Higher Education
 - University
 - Plans
 description: >-
-  University of Hong Kong is a non-commercial higher-education institution; its APIs are not sold
-  as a commercial product. Public APIs (library, repository, course, and open-metadata
-  interfaces) are offered free of charge, typically for non-commercial use. Most
-  administrative and identity APIs are not openly self-service and require institutional
-  affiliation, credentials, or federation membership rather than a paid plan.
+  The University of Hong Kong is a non-commercial higher-education institution and sells no API
+  product. Corrected 2026-08-19: an earlier version of this file described "public library,
+  repository, course and open-metadata interfaces" offered free of charge. No such public
+  interfaces were found. What exists is (a) institution-operated identity infrastructure —
+  a Shibboleth SAML IdP and an AD FS OIDC issuer — whose metadata is free to read but whose use
+  requires a federation or relying-party trust relationship established with HKU ITS, and (b) an
+  Azure API Management gateway whose GenAI APIs are issued at no charge to HKU staff and students
+  only, after institutional sign-in at developer.hku.hk. There is no plan a member of the public
+  can buy or self-serve into.
 notes: >-
-  No published per-seat or per-call commercial pricing. "Free / Open" reflects open
-  public endpoints; "Affiliation / Credentialed" reflects access gated by institutional
-  identity rather than payment.
+  "Free / Open" covers documents anyone may fetch (SAML and OIDC metadata, JWKS). "Affiliation /
+  Credentialed" covers everything else: the GenAI APIs behind developer.hku.hk and any
+  administrative interface, all gated by institutional identity rather than by payment.
 sources:
+- https://developer.hku.hk/
+- https://api.hku.hk/
+- https://adfs.hku.hk/adfs/.well-known/openid-configuration
+- https://hkafidp.hku.hk/idp/shibboleth
 - https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
 plans:
 - id: hku-free-open
   name: Free / Open
   type: free
-  description: Public open APIs (metadata, library, repository, course data) offered at no charge, generally for non-commercial use.
+  description: >-
+    Freely fetchable machine-readable documents on HKU hosts — Shibboleth IdP metadata
+    (hkafidp.hku.hk), AD FS federation metadata, OpenID Connect discovery and JWKS (adfs.hku.hk).
+    No key, no account, no charge. These are protocol metadata, not a consumable data API.
   entries:
   - label: Open API Access
     name: open_api_access
@@ -42,7 +55,10 @@ plans:
 - id: hku-affiliation
   name: Affiliation / Credentialed
   type: free
-  description: Administrative and identity APIs gated behind institutional SSO, client certificates, or federation membership rather than payment.
+  description: >-
+    Everything callable: the HKU GenAI chat-completion, embedding and image-generation APIs
+    behind the api.hku.hk gateway, keyed through developer.hku.hk after HKU sign-in, plus any
+    relying-party integration with the identity providers. Gated by affiliation, not price.
   entries:
   - label: Credentialed Access
     name: credentialed_access

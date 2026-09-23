@@ -1,18 +1,111 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/hku-datahub.yaml
+generated: '2026-08-19'
+method: probed
+source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+sources:
+- https://adfs.hku.hk/adfs/.well-known/openid-configuration
+- https://adfs.hku.hk/adfs/discovery/keys
+- https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml
+- https://hkafidp.hku.hk/idp/shibboleth
+- https://developer.hku.hk/
+x-operator: institution
+note: >-
+  Read from live documents on HKU's own hosts on 2026-08-19, not from prose. The University of
+  Hong Kong operates two institution-run authentication surfaces — an AD FS OAuth 2.0 / OpenID
+  Connect issuer at adfs.hku.hk and a Shibboleth SAML 2.0 identity provider at hkafidp.hku.hk
+  registered in eduGAIN through the Hong Kong Access Federation — plus an Azure API Management
+  developer portal at developer.hku.hk whose API keys are issued only to HKU staff and students
+  after institutional sign-in. There is no anonymous, self-serve credential path for anyone
+  outside the University.
 summary:
   types:
   - oauth2
-  oauth2_flows:
-  - authorizationCode
+  - openIdConnect
+  - saml2
+  - apiKey
 schemes:
-- name: OAuth2
-  type: oauth2
+- name: hku-adfs-oidc
+  type: openIdConnect
+  openIdConnectUrl: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+  issuer: https://adfs.hku.hk/adfs
+  description: >-
+    HKU-operated AD FS OpenID Connect issuer. RS256 id_tokens, pairwise subject identifiers,
+    JWKS at https://adfs.hku.hk/adfs/discovery/keys.
   flows:
   - flow: authorizationCode
-    authorizationUrl: https://figshare.com/account/applications/authorize
-    tokenUrl: https://api.figshare.com/v2/token
-    scopes: 1
+    authorizationUrl: https://adfs.hku.hk/adfs/oauth2/authorize/
+    tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+  - flow: clientCredentials
+    tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+  - flow: deviceCode
+    deviceAuthorizationUrl: https://adfs.hku.hk/adfs/oauth2/devicecode
+    tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+  clientAuthentication:
+  - client_secret_post
+  - client_secret_basic
+  - private_key_jwt
+  - windows_client_authentication
+  registration: private
+  registrationNote: No public dynamic client registration; relying parties are registered by HKU ITS.
   sources:
-  - openapi/hku-datahub.yaml
+  - well-known/hku-adfs-openid-configuration.json
+- name: hku-adfs-wsfed-saml
+  type: saml2
+  entityId: http://adfs.hku.hk/adfs/services/trust
+  metadata: https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml
+  description: >-
+    Signed WS-Federation / SAML 2.0 federation metadata for the HKU AD FS deployment
+    (200, application/samlmetadata+xml, 71,026 bytes on 2026-08-19).
+  sources:
+  - https://adfs.hku.hk/FederationMetadata/2007-06/FederationMetadata.xml
+- name: hku-shibboleth-idp
+  type: saml2
+  entityId: https://hkafidp.hku.hk/idp/shibboleth
+  metadata: https://hkafidp.hku.hk/idp/shibboleth
+  scope: hku.hk
+  federation: Hong Kong Access Federation (HKAF, JUCC) — exported to eduGAIN
+  registrationAuthority: https://hkaf.edu.hk
+  registrationInstant: '2016-12-15T07:04:40Z'
+  entityCategories:
+  - http://refeds.org/category/research-and-scholarship
+  assuranceCertification:
+  - https://refeds.org/sirtfi
+  bindings:
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+  - urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+  nameIdFormats:
+  - urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+  description: >-
+    Shibboleth identity provider operated by HKU, self-publishing its metadata (200,
+    application/xml, 14,831 bytes) and present in the eduGAIN interfederation aggregate.
+    Technical and REFEDS security contacts are published in the metadata; they are named
+    individuals and are deliberately not copied into this catalog.
+  sources:
+  - https://hkafidp.hku.hk/idp/shibboleth
+  - https://mds.edugain.org/edugain-v2.xml
+- name: hku-its-api-subscription-key
+  type: apiKey
+  in: header
+  description: >-
+    Azure API Management subscription key pair issued through developer.hku.hk after HKU
+    institutional sign-in, used for the HKU GenAI chat-completion, embedding and image-generation
+    APIs. The portal returns HTTP 200 but redirects every route to /signin, so the API catalog,
+    the header name and the key policy are not publicly readable.
+  gated: true
+  audience: HKU staff and students
+  sources:
+  - https://developer.hku.hk/
+tenantSchemes:
+- name: microsoft-entra-hku-tenant
+  x-operator: tenant
+  type: openIdConnect
+  openIdConnectUrl: https://login.microsoftonline.com/hku.hk/v2.0/.well-known/openid-configuration
+  tenantId: 42f9b54e-2477-41ba-bf09-7a0d2a83ff09
+  description: >-
+    HKU's Microsoft Entra ID tenant. Machine-readable and institution-specific, but operated by
+    Microsoft on Microsoft's host — recorded as a tenant relationship, not as an HKU contract.
+    Microsoft's realm discovery reports domain hku.hk as Federated to https://adfs.hku.hk/adfs/ls/
+    under the brand "The University Of Hong Kong".
+  sources:
+  - https://login.microsoftonline.com/hku.hk/v2.0/.well-known/openid-configuration
+  - https://login.microsoftonline.com/getuserrealm.srf?login=user@hku.hk&json=1

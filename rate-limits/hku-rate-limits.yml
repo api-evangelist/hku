@@ -4,29 +4,52 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Hong Kong
 providerId: hku
 created: '2026-06-03'
-modified: '2026-06-03'
-reconciled: false
+modified: '2026-08-19'
+reconciled: true
+method: probed
+assessed: '2026-08-19'
 tags:
 - Education
 - Higher Education
 - University
 - Rate Limiting
 description: >-
-  University of Hong Kong does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+  The University of Hong Kong publishes no rate-limit table for any surface. Corrected 2026-08-19:
+  an earlier version of this file referred to open metadata, IIIF and library endpoints that were
+  never found. The APIs HKU actually gates — the GenAI APIs behind api.hku.hk — run on Azure API
+  Management, whose per-product quota and rate-limit policies are configured by HKU ITS and are
+  not visible without institutional sign-in. Identity metadata documents (SAML metadata, OIDC
+  discovery, JWKS) are static and cacheable and imposed no observable limit across the probes run
+  on 2026-08-19. hub.hku.hk applies a Cloudflare managed challenge to automated clients, which is
+  a bot policy rather than a rate limit, and it blocks OAI-PMH harvesting outright.
+notes: >-
+  No limit is published and none can be read without an HKU account. Treat the numbers below as
+  unknown rather than generous.
 sources:
+- https://api.hku.hk/
+- https://adfs.hku.hk/adfs/.well-known/openid-configuration
+- https://hub.hku.hk/oai/request?verb=Identify
 - https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: HKU GenAI APIs (api.hku.hk)
+  scope: subscription-key
+  metric: requests-per-minute
+  limit: not-published
+  notes: >-
+    Azure API Management rate-limit and quota policies are set per product by HKU ITS; not
+    readable without a portal account.
+- name: Identity metadata (adfs.hku.hk, hkafidp.hku.hk)
   scope: client
   metric: requests-per-minute
-  limit: see service documentation
-  notes: No published global limit; large harvests may be rate-limited.
+  limit: none-observed
+  notes: Static signed documents; no 429 and no Retry-After seen across repeated probes on 2026-08-19.
+- name: Institutional repository (hub.hku.hk)
+  scope: client
+  metric: requests-per-minute
+  limit: blocked
+  notes: Cloudflare managed challenge returns 403 to automated clients before any limit applies.
 policies:
 - name: Backoff Strategy
   description: Exponential backoff with jitter; honor Retry-After; harvest during off-peak hours.

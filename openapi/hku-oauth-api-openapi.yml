@@ -3,9 +3,7 @@ info:
   title: HKU Identity Federation O Auth API
   version: '2026-08-19'
   summary: OAuth 2.0 / OpenID Connect endpoints published by the University of Hong Kong's own AD FS identity provider.
-  description: 'Machine-readable description of the OAuth 2.0 / OpenID Connect surface that the University of Hong Kong operates on its own host, adfs.hku.hk. Every path, endpoint URL, scope, grant type, response type and claim in this document is transcribed from HKU''s live OpenID Connect discovery document at https://adfs.hku.hk/adfs/.well-known/openid-configuration (HTTP 200, application/json, 1,874 bytes, fetched 2026-08-19). Nothing here is invented: paths that the discovery document does not advertise are not present, and the observed status code of every endpoint under an unauthenticated probe is recorded in x-probe on the operation.
-
-    HKU does not publish this as a developer-facing API — it is the institution''s federated login infrastructure, used by HKU applications and by service providers HKU trusts. It is catalogued here because it is one of the few genuinely institution-operated, machine-readable contracts the University serves from its own registrable domain.'
+  description: Machine-readable description of the OAuth 2.0 / OpenID Connect surface that the University of Hong Kong operates on its own host, adfs.hku.hk.
   contact:
     name: The University of Hong Kong — Information Technology Services
     url: https://its.hku.hk/
@@ -203,17 +201,6 @@ paths:
           description: Returned to unparameterised public probes.
 components:
   schemas:
-    OAuthError:
-      type: object
-      description: RFC 6749 section 5.2 error response.
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        error_uri:
-          type: string
-          format: uri
     TokenResponse:
       type: object
       properties:
@@ -231,6 +218,17 @@ components:
           type: string
         scope:
           type: string
+    OAuthError:
+      type: object
+      description: RFC 6749 section 5.2 error response.
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_uri:
+          type: string
+          format: uri
   securitySchemes:
     bearerAuth:
       type: http

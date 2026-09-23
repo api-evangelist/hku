@@ -1,0 +1,47 @@
+generated: '2026-08-19'
+method: probed
+source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+x-operator: institution
+note: >-
+  HKU publishes no API changelog, no deprecation policy, no status page and no versioning scheme
+  for any surface found. What follows is what the live artifacts themselves reveal about the
+  lifecycle of HKU's identity infrastructure — dates and versions read from documents, not claims.
+versioning:
+  scheme: none-published
+  detail: >-
+    Neither identity surface is versioned by HKU. The OIDC discovery document carries no version
+    field; AD FS federation metadata uses Microsoft's fixed 2007-06 path; the Shibboleth IdP
+    metadata carries no version. The Azure API Management gateway at api.hku.hk may version
+    individual APIs internally, but its catalog is not publicly readable.
+milestones:
+- date: '2016-04-04'
+  event: >-
+    Signing and encryption certificates in the Shibboleth IdP metadata are issued to
+    CN=juccaf-idp.hku.hk, valid 2016-04-04 to 2036-04-04 — a 20-year self-signed key, still in use.
+  source: https://hkafidp.hku.hk/idp/shibboleth
+- date: '2016-12-15'
+  event: HKU's IdP registered with the Hong Kong Access Federation and exported to eduGAIN.
+  source: https://mds.edugain.org/edugain-v2.xml
+- date: '2026-03-17'
+  event: >-
+    HKU ITS opened developer.hku.hk to students, adding chat-completion, embedding and
+    image-generation APIs across several models to a portal previously used by staff.
+  source: https://its.hku.hk/news/
+deprecation:
+  policy: none-published
+  sunsetHeader: false
+  detail: No Sunset or Deprecation headers observed on any HKU host; no deprecation policy page found.
+status:
+  page: none-found
+  detail: >-
+    No status.hku.hk or public incident history for any HKU API surface. Service notices are posted
+    on its.hku.hk, which returns 403 to automated clients.
+changelog:
+  url: none-found
+  detail: The only public change record is the ITS news feed, which is a human announcement stream, not an API changelog.
+staleness:
+  signingKeyAgeYears: 10
+  note: >-
+    The IdP's signing certificate was minted in 2016 and does not expire until 2036. Long-lived
+    federation keys are common in eduGAIN and are not by themselves a defect, but they are the
+    single oldest live artifact in this profile.

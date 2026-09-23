@@ -1,17 +1,68 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/hku-datahub.yaml
+generated: '2026-08-19'
+method: probed
+source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+x-operator: institution
+note: >-
+  Scope strings are read verbatim from scopes_supported in HKU's live OpenID Connect discovery
+  document on its own host. Descriptions are ours. These are the scopes the HKU AD FS issuer
+  advertises to relying parties; HKU publishes no scope documentation of its own, and the HKU ITS
+  API developer portal (developer.hku.hk) does not expose its API scopes without institutional
+  sign-in.
 schemes:
-- name: OAuth2
-  source: openapi/hku-datahub.yaml
+- name: hku-adfs-oidc
+  source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+  issuer: https://adfs.hku.hk/adfs
   flows:
   - flow: authorizationCode
-    authorizationUrl: https://figshare.com/account/applications/authorize
-    tokenUrl: https://api.figshare.com/v2/token
+    authorizationUrl: https://adfs.hku.hk/adfs/oauth2/authorize/
+    tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+  - flow: clientCredentials
+    tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
+  - flow: deviceCode
+    deviceAuthorizationUrl: https://adfs.hku.hk/adfs/oauth2/devicecode
+    tokenUrl: https://adfs.hku.hk/adfs/oauth2/token/
 scopes:
-- scope: all
-  description: Grants all access
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/hku-datahub.yaml
+- scope: openid
+  description: Standard OpenID Connect scope — issues an ID token for the signed-in HKU account.
+  flows: [authorizationCode, clientCredentials, deviceCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: profile
+  description: Releases profile claims (unique_name, upn) about the signed-in account.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: email
+  description: Releases the account's email claim.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: allatclaims
+  description: AD FS scope that copies all claims from the underlying authentication into the issued token.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: aza
+  description: Microsoft broker scope used for primary refresh tokens on managed devices.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: user_impersonation
+  description: Allows a relying party to act on behalf of the signed-in user.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: logon_cert
+  description: Requests a logon certificate for certificate-based authentication.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: winhello_cert
+  description: Requests a Windows Hello for Business certificate.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+- scope: vpn_cert
+  description: Requests a VPN client certificate.
+  flows: [authorizationCode]
+  sources: [well-known/hku-adfs-openid-configuration.json]
+claims:
+  supported: [aud, iss, iat, exp, auth_time, nonce, at_hash, c_hash, sub, upn, unique_name, pwd_url, pwd_exp, mfa_auth_time, sid, nbf]
+  source: https://adfs.hku.hk/adfs/.well-known/openid-configuration
+samlAttributesReleased:
+  note: >-
+    The Shibboleth IdP at hkafidp.hku.hk declares the attributes it releases in its SAML metadata.
+    They are catalogued in vocabulary/hku-identity-attributes.yml.
+  source: https://hkafidp.hku.hk/idp/shibboleth
