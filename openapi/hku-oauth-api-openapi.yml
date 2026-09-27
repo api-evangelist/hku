@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: HKU Identity Federation O Auth API
+  title: HKU Identity Federation OAuth API
   version: '2026-08-19'
   summary: OAuth 2.0 / OpenID Connect endpoints published by the University of Hong Kong's own AD FS identity provider.
   description: Machine-readable description of the OAuth 2.0 / OpenID Connect surface that the University of Hong Kong operates on its own host, adfs.hku.hk.
