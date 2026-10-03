@@ -201,6 +201,17 @@ paths:
           description: Returned to unparameterised public probes.
 components:
   schemas:
+    OAuthError:
+      type: object
+      description: RFC 6749 section 5.2 error response.
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_uri:
+          type: string
+          format: uri
     TokenResponse:
       type: object
       properties:
@@ -218,17 +229,6 @@ components:
           type: string
         scope:
           type: string
-    OAuthError:
-      type: object
-      description: RFC 6749 section 5.2 error response.
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        error_uri:
-          type: string
-          format: uri
   securitySchemes:
     bearerAuth:
       type: http
