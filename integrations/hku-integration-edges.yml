@@ -1,0 +1,44 @@
+edges:
+- partner_name: eduGAIN
+  partner: null
+  type: register
+  channel: standard-directory
+  relationship: network-participant
+  direction: partner-built
+  evidence: https://technical.edugain.org/api.php?action=list_entities&type=idp&format=json
+  category: research and education identity federation
+  contract_reference:
+    network: eduGAIN (GÉANT interfederation)
+    spec_file: null
+    roles:
+    - identity-provider
+    role: identity-provider
+    federations:
+    - HKAF
+    matched_by: domain+repo-name:hku.hk
+    entities:
+    - entity_id: https://hkafidp.hku.hk/idp/shibboleth
+      role: identity-provider
+      federation: HKAF
+      display_name: The University of Hong Kong
+      entity_categories:
+      - '11'
+      - '76'
+      sirtfi: true
+      coco: false
+    - entity_id: https://sts.windows.net/03edabb0-8a31-453e-a507-fdd0287b118d/
+      role: identity-provider
+      federation: HKAF
+      display_name: HKU SPACE
+      entity_categories: null
+      sirtfi: false
+      coco: false
+    detected_by: sweep-higher-ed.py
+    detected: '2026-10-15'
+  detected_by: sweep-higher-ed.py
+  first_seen: '2026-10-15'
+generated: '2026-10-15'
+method: searched
+checked:
+- https://technical.edugain.org/api.php?action=list_entities&type=idp&format=json
+- https://technical.edugain.org/api.php?action=list_entities&type=sp&format=json
