@@ -1,4 +1,4 @@
-# University of Hong Kong (hku)
+# University of Hong Kong
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,98 +64,165 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of Hong Kong (HKU) is a public research university in Hong Kong SAR, founded in 1911 and ranked in the top 30 of the QS World University Rankings. This repository catalogs HKU's public developer and API footprint as an [APIs.json](https://apisjson.org) provider profile for the API Evangelist network.
+The University of Hong Kong (HKU) is a public research university in Hong Kong SAR, founded in 1911 and ranked in the top 30 of the QS World University Rankings. It operates no public, self-serve API programme. The machine-readable surfaces HKU genuinely runs on its own hosts are identity infrastructure: a Shibboleth SAML 2.0 identity provider at hkafidp.hku.hk, registered with the Hong Kong Access Federation in 2016 and exported to eduGAIN with REFEDS Research and Scholarship and SIRTFI declarations, and an AD FS OAuth 2.0 / OpenID Connect issuer at adfs.hku.hk publishing a live discovery document and JWKS. HKU ITS also runs an Azure API Management gateway (api.hku.hk) and developer portal (developer.hku.hk) that opened GenAI chat-completion, embedding and image-generation APIs to students in March 2026 — but every portal route redirects to institutional sign-in, so no specification, scope or endpoint list is publicly readable. Its research repository is a Figshare tenancy and its library discovery is an Ex Libris Primo tenancy: real institutional facts, vendor-operated contracts, recorded here as tenant relationships rather than credited to HKU. HKU publishes no OpenAPI, no robots.txt on its main host, no llms.txt, no status page and no API changelog.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/hku/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=hku-api-evangelist&utm_content=repo
+**Areas:** Education · Higher Education · University · Hong Kong · Identity Federation · SSO · Research Data · Open Access · Artificial Intelligence · Research Computing
 
-## Type
+## University of Hong Kong on APIs.io
 
-- Type: Index (`x-type: university`, `x-category: Public Research University`)
-- Position: Consumer
-- Access: 3rd-Party
-- ROR: https://ror.org/02zhqgq86
+Everything profiled for University of Hong Kong is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/hku/](https://apis.io/providers/hku/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-Education, Higher Education, University, Hong Kong, Identity Federation, Single Sign-On, Research Data, Open Access, Artificial Intelligence, Research Computing
+- [HKU Shibboleth Identity Provider](https://apis.io/apis/hku/identity-federation/) — The University of Hong Kong's own Shibboleth SAML 2.0 identity provider, entityID https://hkafidp.hku.hk/idp/shibboleth, scope hku.hk. It self-publishes…
+- [HKU ITS API Developer Portal and Gateway](https://apis.io/apis/hku/its-api-portal/) — HKU Information Technology Services runs an Azure API Management gateway at api.hku.hk and a developer portal at developer.hku.hk. Since 17 March 2026 the…
+- [HKU Scholars Hub OAI-PMH](https://apis.io/apis/hku/scholars-hub-oai/) — HKU Scholars Hub is the University's DSpace-based open-access institutional repository and current research information system, on HKU's own host. It is…
+- [HKU DataHub (Figshare tenancy)](https://apis.io/apis/hku/datahub-figshare/) — HKU DataHub is the University's research-data repository, running as a Figshare tenancy — datahub.hku.hk is a CNAME to figshare.com and the same content is…
+- [HKU Libraries Discovery (Ex Libris Primo tenancy)](https://apis.io/apis/hku/library-primo/) — HKU Libraries' discovery layer runs on Ex Libris Primo VE at julac-hku.primo.exlibrisgroup.com under the JULAC consortium view 852JULAC_HKU. The catalog…
+- [HKU Microsoft Entra ID Tenant](https://apis.io/apis/hku/entra-tenant/) — HKU's Microsoft Entra ID tenant (42f9b54e-2477-41ba-bf09-7a0d2a83ff09) publishes a live OpenID Connect discovery document for the hku.hk domain. It is…
+- [University of Hong Kong Discovery API](https://apis.io/apis/hku/hku-discovery-api/) — Metadata documents that describe the identity service.
+- [University of Hong Kong O Auth API](https://apis.io/apis/hku/hku-oauth-api/) — OAuth 2.0 / OpenID Connect protocol endpoints.
 
-## Surfaces and who operates them
+### Published properties
 
-A university is a federation of buyers. Every surface below carries an operator: `institution`
-means HKU runs the thing the contract describes, `tenant` means HKU is an account on someone
-else's platform. Tenant contracts are recorded, never stored here as HKU's own.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Surface | Operator | Probed 2026-08-19 |
-|---|---|---|
-| **HKU Shibboleth Identity Provider** — `hkafidp.hku.hk`, entityID `https://hkafidp.hku.hk/idp/shibboleth`, scope `hku.hk`, registered by the Hong Kong Access Federation 2016-12-15 and exported to eduGAIN with REFEDS R&S + SIRTFI | institution | 200, signed SAML metadata, 14,831 bytes |
-| **HKU AD FS OAuth 2.0 / OpenID Connect issuer** — `adfs.hku.hk`, discovery + JWKS + UserInfo + device code + WS-Fed metadata | institution | 200 discovery, 200 JWKS, 401 UserInfo |
-| **HKU ITS API developer portal and gateway** — `developer.hku.hk` + `api.hku.hk` (Azure API Management), GenAI chat/embedding/image APIs opened to students 2026-03-17 | institution | 200 → redirects to `/signin`; gateway 404 envelope |
-| **HKU Scholars Hub OAI-PMH** — `hub.hku.hk`, DSpace | institution | 403 Cloudflare challenge — blocked, not absent |
-| **HKU DataHub** — `datahub.hku.hk` CNAME → figshare.com | tenant (Figshare) | 202, empty body |
-| **HKU Libraries discovery** — `julac-hku.primo.exlibrisgroup.com` | tenant (Ex Libris) | 200 |
-| **HKU Microsoft Entra ID tenant** — `login.microsoftonline.com/hku.hk` | tenant (Microsoft) | 200 |
+#### Agentic access (1)
 
-HKU publishes no OpenAPI, no `robots.txt` on `www.hku.hk`, no `llms.txt`, no status page and no API
-changelog, and its official GitHub org has no public repositories.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Artifacts
+- [Hku Agentic Access](https://apis.io/agentic-access/hku/hku-agentic-access/)
 
-- OpenAPI (derived from HKU's OIDC discovery document): [openapi/hku-identity-openapi.yml](openapi/hku-identity-openapi.yml)
-- Captured discovery document: [well-known/hku-adfs-openid-configuration.json](well-known/hku-adfs-openid-configuration.json)
-- JSON Schema: [json-schema/hku-openid-configuration.schema.json](json-schema/hku-openid-configuration.schema.json)
-- Examples (real captured responses): [examples/hku-identity-examples.yml](examples/hku-identity-examples.yml)
-- Authentication: [authentication/hku-authentication.yml](authentication/hku-authentication.yml)
-- Scopes: [scopes/hku-scopes.yml](scopes/hku-scopes.yml)
-- Errors: [errors/hku-errors.yml](errors/hku-errors.yml)
-- Conformance (education regime): [conformance/hku-conformance.yml](conformance/hku-conformance.yml)
-- Identity attribute vocabulary: [vocabulary/hku-identity-attributes.yml](vocabulary/hku-identity-attributes.yml)
-- JSON-LD: [json-ld/hku-organization.jsonld](json-ld/hku-organization.jsonld)
-- Spectral rules: [rules/hku-identity-rules.yml](rules/hku-identity-rules.yml)
-- Lifecycle: [lifecycle/hku-lifecycle.yml](lifecycle/hku-lifecycle.yml)
-- Plans / Pricing: [plans/hku-plans-pricing.yml](plans/hku-plans-pricing.yml)
-- Rate Limits: [rate-limits/hku-rate-limits.yml](rate-limits/hku-rate-limits.yml)
-- FinOps: [finops/hku-finops.yml](finops/hku-finops.yml)
-- Domain security: [security/hku-domain-security.yml](security/hku-domain-security.yml)
+#### JSON Schema (1)
 
-## Timestamps
+The data models the API reads and writes.
 
-- Created: 2026-06-03
-- Modified: 2026-08-19
+- [HKU AD FS OpenID Provider Metadata](https://apis.io/schemas/hku/hku-openid-configuration.schema/)
 
-## Common Properties
+#### JSON-LD (1)
 
-- Website: https://www.hku.hk/
-- Developer Portal: https://developer.hku.hk/
-- Identity Federation: https://hkafidp.hku.hk/idp/shibboleth
-- Research Repository: https://hub.hku.hk/
-- Library Catalog: https://julac-hku.primo.exlibrisgroup.com/discovery/search?vid=852JULAC_HKU:HKU
-- Research Computing: https://hpc.hku.hk/
-- AI Policy: https://aied.talic.hku.hk/aipolicy/
-- AI Tooling: https://genai.hku.hk/
-- Privacy Policy: https://www.hku.hk/about/policies_reports/privacy_policy.html
-- GitHub: https://github.com/hku-official
-- LinkedIn: https://www.linkedin.com/school/university-of-hong-kong/
-- Review: [review.yml](review.yml)
+Linked-data contexts for the provider's vocabulary.
 
-## Notes
+- [Hku Organization Context](https://apis.io/jsonld/hku/hku-organization/)
 
-**Attribution correction, 2026-08-19.** This profile previously carried eleven API entries derived
-from a single Figshare specification — altmetric, articles, authors, collections, institutions,
-oauth, other, profiles, projects, symplectic — presented as HKU APIs. They were one vendor
-document counted eleven times. The specification has been removed and HKU DataHub is now recorded
-for what it is: an HKU tenancy on Figshare's platform, HKU's data under Figshare's contract. The
-re-profile replaces them with the surfaces HKU actually operates, which are identity
-infrastructure. This lowers the score, and that is the correction working.
+#### Vocabulary (1)
 
-Residual vendor-derived files remain on disk pending manual removal and are pointed at by nothing
-in `apis.yml`: `collections/` (20 files, every request against `api.figshare.com`) and
-`agentic-access/hku-agentic-access.yml` (157 operations derived from the removed Figshare spec).
+The provider's domain terms, defined.
 
-Access posture was also corrected: the earlier record said "Free · Self-serve signup". HKU's
-developer portal redirects every route to institutional sign-in, and API keys are issued only to
-HKU staff and students. No endpoints were fabricated.
+- [HKU DataHub (Figshare) Vocabulary](https://apis.io/vocabularies/hku/hku-vocabulary/)
 
-## Maintainers
+#### Collections (10)
 
-- Kin Lane — kin@apievangelist.com
+Postman and Open Collection request collections.
+
+- [Figshare altmetric API](https://apis.io/collections/hku/open-hku-altmetric-api/)
+- [Figshare altmetric articles API](https://apis.io/collections/hku/open-hku-articles-api/)
+- [Figshare altmetric authors API](https://apis.io/collections/hku/open-hku-authors-api/)
+- [Figshare altmetric collections API](https://apis.io/collections/hku/open-hku-collections-api/)
+- [Figshare altmetric institutions API](https://apis.io/collections/hku/open-hku-institutions-api/)
+- [Figshare altmetric oauth API](https://apis.io/collections/hku/open-hku-oauth-api/)
+- [Figshare altmetric other API](https://apis.io/collections/hku/open-hku-other-api/)
+- [Figshare altmetric profiles API](https://apis.io/collections/hku/open-hku-profiles-api/)
+- [Figshare altmetric projects API](https://apis.io/collections/hku/open-hku-projects-api/)
+- [Figshare altmetric symplectic API](https://apis.io/collections/hku/open-hku-symplectic-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [University of Hong Kong — identity rules](https://apis.io/rules/hku/hku-identity-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Hku Authentication](https://apis.io/security/hku/hku-authentication/)
+- [Hku Domain Security](https://apis.io/security/hku/hku-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Hku Scopes](https://apis.io/scopes/hku/hku-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Hku Plans Pricing](https://apis.io/plans/hku/hku-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Hku Rate Limits](https://apis.io/rate-limits/hku/hku-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Hku Finops](https://apis.io/finops/hku/hku-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.hku.hk/)
+- [Support](https://www.hku.hk/contact/)
+- [Blog](https://www.hku.hk/press/)
+- [Privacy policy](https://www.hku.hk/about/policies_reports/privacy_policy.html)
+
+## API Evangelist rating
+
+**Kin Score 40.8** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 82.1 |
+| Contract quality | 25.4 |
+| Contract governance | 40.9 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 44.7 |
+
+**Agent readiness 23.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 35.5** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/hku/](https://apis.io/providers/hku/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for University of Hong Kong: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/hku/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
